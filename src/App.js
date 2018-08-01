@@ -1,6 +1,6 @@
 import React from 'react'
 import Blog from './components/Blog'
-import Notification from './components/Notification'
+import Login from './components/Login'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -48,31 +48,12 @@ class App extends React.Component {
   render() {
     if (this.state.user === null) {
       return (
-        <div>
-          <h2>Kirjaudu sovellukseen</h2>
-          <form onSubmit={this.login}>
-          <div>
-            käyttäjätunnus
-            <input
-              type="text"
-              name="username"
-              value={this.state.username}
-              onChange={this.handleLoginFieldChange}
-            />
-          </div>
-          <div>
-            salasana
-            <input
-              type="password"
-              name="password"
-              value={this.state.password}
-              onChange={this.handleLoginFieldChange}
-            />
-          </div>
-          <button type="submit">kirjaudu</button>
-          <Notification message={this.state.error} />
-        </form>
-        </div>
+        <Login 
+          username={this.state.username} 
+          password={this.state.password}
+          login={this.login}
+          onChange={this.handleLoginFieldChange}
+          message={this.state.error}/>
       )
     }
 
