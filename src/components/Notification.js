@@ -1,11 +1,15 @@
 import React from 'react'
+import './notification.css'
 
-const Notification = ({ message }) => {
-  if (message === null) {
+const Notification = ({ message, type }) => {
+  if (message === null|| message === '') {
     return null
   }
+  if (!type)
+    type = 'standard'
+
   return (
-    <div className="error">
+    <div className={type}>
       {message}
     </div>
   )

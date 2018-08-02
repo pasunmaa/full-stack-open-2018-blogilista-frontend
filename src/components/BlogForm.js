@@ -16,7 +16,7 @@ const BlogForm = ({ onSubmit, onChange, title, author, url, message}) => {
         <button type="submit">luo</button>
       </form>
 
-      <Notification message={message} />
+      <Notification message={message} type='error' />
     </div>
   )
 }

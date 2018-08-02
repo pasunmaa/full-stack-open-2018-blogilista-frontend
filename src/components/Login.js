@@ -26,7 +26,7 @@ const Login = ( { username, password, login, onChange, message } ) => {
           />
         </div>
         <button type="submit">kirjaudu</button>
-        <Notification message={message} />
+        <Notification message={message} type='error'/>
       </form>
     </div>
   )

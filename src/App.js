@@ -2,6 +2,7 @@ import React from 'react'
 import Login from './components/Login'
 import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
+import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -15,7 +16,9 @@ class App extends React.Component {
       user: null,
       title: '',
       author: '',
-      url: ''
+      url: '',
+      error: '',
+      infomessage: ''
     }
   }
 
@@ -59,7 +62,12 @@ class App extends React.Component {
     console.log('logging out', this.state.user.name)
     window.localStorage.removeItem('loggedAppUser')
     blogService.setToken(null)
-    this.setState({ user: null })
+    this.setState({ 
+      user: null,
+      infomessage: `Käyttäjä kirjautunut ulos.`})
+        setTimeout(() => {
+          this.setState({ infomessage: null })
+        }, 3000)
   }
 
   createNew = async (event) => {
@@ -73,7 +81,11 @@ class App extends React.Component {
       })
       this.setState({ 
         blogs: this.state.blogs.concat(newBlog),
-        title: '', author: '', url: ''})
+        title: '', author: '', url: '',
+        infomessage: `Lisättiin uusi blogi: ${newBlog.title}`})
+        setTimeout(() => {
+          this.setState({ infomessage: null })
+        }, 5000)
     } catch(exception) {
       console.log('creating new blog', this.state.title,' failed with ', exception)
       this.setState({
@@ -92,12 +104,15 @@ class App extends React.Component {
   render() {
     if (this.state.user === null) {
       return (
+        <div>
+        <Notification message={this.state.infomessage} /* type='stadard' */ />
         <Login 
           username={this.state.username} 
           password={this.state.password}
           login={this.login}
           onChange={this.handleFieldChange}
           message={this.state.error}/>
+        </div>
       )
     }
 
@@ -105,7 +120,7 @@ class App extends React.Component {
       <div>
         Kirjautunut käyttäjä on <b>{this.state.user.name}  </b>
         <button type="button" onClick={this.logout}>kirjaudu ulos</button>
-        <h2>blogs</h2>
+        <h2>Blogit</h2>
         {this.state.blogs.map(blog => 
           <Blog key={blog.id} blog={blog}/>
         )}
@@ -116,6 +131,7 @@ class App extends React.Component {
           author={this.state.author}
           url={this.state.url}
           message={this.state.error} />
+        <Notification message={this.state.infomessage} type='info'/>
       </div>
     );
   }
