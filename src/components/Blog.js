@@ -20,17 +20,22 @@ const lineStyle = {
   paddingLeft: 8,
 }
 
-const Blog = ({ blog }) => (
-  <div style={blogStyle}>
+const Blog = ({ blog, likeIncrease }) => (
+  <div style={blogStyle} key={blog.id}>
     <div>{blog.title} <strong>by</strong> {blog.author}</div>
+    <div>{blog.id}</div>
     <div style={urlStyle}><a href={blog.url}>{blog.url}</a></div>
-    <div style={lineStyle}>{blog.likes} tykkäystä <button>tykkää</button></div>
+    <div style={lineStyle}>
+      {blog.likes} tykkäystä &nbsp;
+      <button onClick={likeIncrease}>tykkää</button>
+    </div>
     <div style={lineStyle}>lisätty by {blog.user.name}</div>
   </div>
 )
 
 Blog.propTypes = {
-  blog: PropTypes.object.isRequired
+  blog: PropTypes.object.isRequired,
+  likeIncrease: PropTypes.func.isRequired
 }
 
 export default Blog
