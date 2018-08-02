@@ -3,6 +3,7 @@ import Login from './components/Login'
 import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
+import Togglable from './components/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -83,9 +84,10 @@ class App extends React.Component {
         blogs: this.state.blogs.concat(newBlog),
         title: '', author: '', url: '',
         infomessage: `Lisättiin uusi blogi: ${newBlog.title}`})
+      this.blogForm.toggleVisibility()
         setTimeout(() => {
-          this.setState({ infomessage: null })
-        }, 5000)
+        this.setState({ infomessage: null })
+      }, 5000)
     } catch(exception) {
       console.log('creating new blog', this.state.title,' failed with ', exception)
       this.setState({
@@ -124,14 +126,19 @@ class App extends React.Component {
         {this.state.blogs.map(blog => 
           <Blog key={blog.id} blog={blog}/>
         )}
-        <BlogForm 
-          onSubmit={this.createNew}
-          onChange={this.handleFieldChange}
-          title={this.state.title}
-          author={this.state.author}
-          url={this.state.url}
-          message={this.state.error} />
-        <Notification message={this.state.infomessage} type='info'/>
+        <br></br>
+        <div>
+          <Togglable buttonLabel="Lisää blogi" ref={component => this.blogForm = component}>
+            <BlogForm 
+              onSubmit={this.createNew}
+              onChange={this.handleFieldChange}
+              title={this.state.title}
+              author={this.state.author}
+              url={this.state.url}
+              message={this.state.error} />
+          </Togglable>
+          <Notification message={this.state.infomessage} type='info'/>
+        </div>
       </div>
     );
   }
