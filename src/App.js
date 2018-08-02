@@ -4,6 +4,7 @@ import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
+import TogglableLine from './components/TogglableLine'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -99,9 +100,17 @@ class App extends React.Component {
     }
   }
 
+  toggleBlogDetail = (event) => {
+    event.preventDefault()
+    console.log('toggleBlogDetail clicked', event.target.blogid)
+    //this.setState({ [event.target.name]: event.target.value })
+  }
+
   handleFieldChange = (event) => {
     this.setState({ [event.target.name]: event.target.value })
   }
+
+  blogList = {}
 
   render() {
     if (this.state.user === null) {
@@ -123,8 +132,12 @@ class App extends React.Component {
         Kirjautunut käyttäjä on <b>{this.state.user.name}  </b>
         <button type="button" onClick={this.logout}>kirjaudu ulos</button>
         <h2>Blogit</h2>
-        {this.state.blogs.map(blog => 
-          <Blog key={blog.id} blog={blog}/>
+        {this.state.blogs.map(blog => {
+          return ( 
+            <TogglableLine key={blog.id} label={blog.title} ref={component => this.blogList[blog.id] = component} blog={blog}>
+              <Blog key={blog.id} blog={blog}/>
+            </TogglableLine>
+          )}
         )}
         <br></br>
         <div>
