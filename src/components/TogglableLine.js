@@ -32,7 +32,7 @@ class TogglableLine extends React.Component {
 }
 
 TogglableLine.propTypes = {
-  label: PropTypes.string
+  label: PropTypes.string.isRequired
 }
 
 export default TogglableLine

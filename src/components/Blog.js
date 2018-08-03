@@ -23,7 +23,6 @@ const lineStyle = {
 const Blog = ({ blog, likeIncrease }) => (
   <div style={blogStyle} key={blog.id}>
     <div>{blog.title} <strong>by</strong> {blog.author}</div>
-    <div>{blog.id}</div>
     <div style={urlStyle}><a href={blog.url}>{blog.url}</a></div>
     <div style={lineStyle}>
       {blog.likes} tykkäystä &nbsp;

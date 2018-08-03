@@ -102,25 +102,23 @@ class App extends React.Component {
 
   updateBlog = (blogID) => {
     return async () => {
-      console.log('udpating blog id', blogID)
+      //console.log('udpating blog id', blogID)
       const iBlog = this.state.blogs.findIndex(blog => blog.id === blogID)
       const user = { ...this.state.blogs[iBlog].user }
       const blogToBeUpdated = {
+        id: blogID,
         title: this.state.blogs[iBlog].title,
         author: this.state.blogs[iBlog].author,
         url: this.state.blogs[iBlog].url,
         user: user,
         likes: this.state.blogs[iBlog].likes + 1,
       }
-      console.log(blogToBeUpdated)
       try{
         const aBlog = await blogService.updateBlog(this.state.blogs[iBlog].id, blogToBeUpdated)
-        console.log(aBlog)
         this.setState({ 
           blogs: this.state.blogs.map((blog, i) => i === iBlog ? blogToBeUpdated : blog),
           infomessage: `Päivitettiin blogia: ${aBlog.title}`})
-        this.blogForm.toggleVisibility()
-          setTimeout(() => {
+        setTimeout(() => {
           this.setState({ infomessage: null })
         }, 5000)
       } catch(exception) {
@@ -163,8 +161,8 @@ class App extends React.Component {
         <h2>Blogit</h2>
         {this.state.blogs.map(blog => {
           return ( 
-            <TogglableLine key={blog.id} label={blog.title} ref={component => this.blogList[blog.id] = component} blog={blog}>
-              <Blog key={blog.id} blog={blog} likeIncrease={this.updateBlog(blog.id)}/>
+            <TogglableLine key={'line'+blog.id} label={blog.title} ref={component => this.blogList[blog.id] = component} blog={blog}>
+              <Blog /* key={'blog'+blog.id} */ blog={blog} likeIncrease={this.updateBlog(blog.id)}/>
             </TogglableLine>
           )}
         )}
