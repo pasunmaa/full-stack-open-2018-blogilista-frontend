@@ -28,7 +28,7 @@ const Blog = ({ blog, likeIncrease }) => (
       {blog.likes} tykkäystä &nbsp;
       <button onClick={likeIncrease}>tykkää</button>
     </div>
-    <div style={lineStyle}>lisätty by {blog.user.name}</div>
+    <div style={lineStyle}>lisätty by {blog.user ? blog.user.name : 'EI TIEDOSSA'}</div>
   </div>
 )
 
