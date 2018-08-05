@@ -20,13 +20,32 @@ class TogglableLine extends React.Component {
     return (
       <div>
         <div style={hideWhenVisible}>
-          <div onClick={this.toggleVisibility}>
-            {this.props.linetext} &nbsp;
-        </div>
-        <button onClick={this.props.actionbutton}>{this.props.actionlable}</button>
+          <table>
+            <tbody>
+            <tr>
+              <td onClick={this.toggleVisibility}>
+                {this.props.linetext}
+              </td>
+              <td>
+                <button onClick={this.props.actionbutton}>{this.props.actionlable}</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
         </div>
         <div style={showWhenVisible}>
-          <div onClick={this.toggleVisibility}>{this.props.linetext}</div>
+          <table>
+            <tbody>
+            <tr>
+              <td onClick={this.toggleVisibility}>
+                {this.props.linetext}
+              </td>
+              <td>
+                <button onClick={this.props.actionbutton}>{this.props.actionlable}</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
           {this.props.children}
         </div>
       </div>

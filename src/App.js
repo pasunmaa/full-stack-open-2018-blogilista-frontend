@@ -137,22 +137,24 @@ class App extends React.Component {
     return async () => {
       const iBlog = this.state.blogs.findIndex(blog => blog.id === blogID)
       //console.log('deleting blog', blogID, this.state.blogs[iBlog].title)
-      try{
-        await blogService.deleteBlog(this.state.blogs[iBlog].id)
-        this.setState({ 
-          infomessage: `Poistettiin blogi: ${this.state.blogs[iBlog].title}`,
-          blogs: this.state.blogs.filter((blog, i) => i !== iBlog)})
-        setTimeout(() => {
-          this.setState({ infomessage: null })
-        }, 5000)
-      } catch(exception) {
-        console.log('deleting blog', this.state.blogs[iBlog].title,' failed with ', exception)
-        this.setState({
-          error: 'blogin poisto epäonnistui' + exception,
-        })
-        setTimeout(() => {
-          this.setState({ error: null })
-        }, 5000)
+      if (window.confirm('Haluatko varmasti poistaa blogin ', this.state.blogs[iBlog].title)) {
+        try{
+          await blogService.deleteBlog(this.state.blogs[iBlog].id)
+          this.setState({ 
+            infomessage: `Poistettiin blogi: ${this.state.blogs[iBlog].title}`,
+            blogs: this.state.blogs.filter((blog, i) => i !== iBlog)})
+          setTimeout(() => {
+            this.setState({ infomessage: null })
+          }, 5000)
+        } catch(exception) {
+          console.log('deleting blog', this.state.blogs[iBlog].title,' failed with ', exception)
+          this.setState({
+            error: 'blogin poisto epäonnistui' + exception,
+          })
+          setTimeout(() => {
+            this.setState({ error: null })
+          }, 5000)
+        }
       }
     }
   }
@@ -210,6 +212,7 @@ class App extends React.Component {
               url={this.state.url}
               message={this.state.error} />
           </Togglable>
+          <br></br>
           <Notification message={this.state.infomessage} type='info'/>
         </div>
       </div>
