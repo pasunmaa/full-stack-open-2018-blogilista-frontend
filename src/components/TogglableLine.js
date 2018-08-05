@@ -20,10 +20,32 @@ class TogglableLine extends React.Component {
     return (
       <div>
         <div style={hideWhenVisible}>
-          <div onClick={this.toggleVisibility}>{this.props.label}</div>
+          <table>
+            <tbody>
+            <tr>
+              <td onClick={this.toggleVisibility}>
+                {this.props.linetext}
+              </td>
+              <td>
+                <button onClick={this.props.actionbutton}>{this.props.actionlable}</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
         </div>
         <div style={showWhenVisible}>
-          <div onClick={this.toggleVisibility}>{this.props.label}</div>
+          <table>
+            <tbody>
+            <tr>
+              <td onClick={this.toggleVisibility}>
+                {this.props.linetext}
+              </td>
+              <td>
+                <button onClick={this.props.actionbutton}>{this.props.actionlable}</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
           {this.props.children}
         </div>
       </div>
@@ -32,7 +54,9 @@ class TogglableLine extends React.Component {
 }
 
 TogglableLine.propTypes = {
-  label: PropTypes.string.isRequired
+  linetext: PropTypes.string.isRequired,
+  actionlable: PropTypes.string.isRequired,
+  actionbutton: PropTypes.func.isRequired
 }
 
 export default TogglableLine

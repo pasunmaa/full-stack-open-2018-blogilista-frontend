@@ -122,7 +122,7 @@ class App extends React.Component {
           this.setState({ infomessage: null })
         }, 5000)
       } catch(exception) {
-        console.log('updating blog', this.state.title,' failed with ', exception)
+        console.log('updating blog',this.state.blogs[iBlog].titlee,' failed with ', exception)
         this.setState({
           error: 'blogin päivitys epäonnistui' + exception,
         })
@@ -133,11 +133,37 @@ class App extends React.Component {
     }
   }
 
-    handleFieldChange = (event) => {
+  deleteBlog = (blogID) => {
+    return async () => {
+      const iBlog = this.state.blogs.findIndex(blog => blog.id === blogID)
+      //console.log('deleting blog', blogID, this.state.blogs[iBlog].title)
+      if (window.confirm('Haluatko varmasti poistaa blogin ', this.state.blogs[iBlog].title)) {
+        try{
+          await blogService.deleteBlog(this.state.blogs[iBlog].id)
+          this.setState({ 
+            infomessage: `Poistettiin blogi: ${this.state.blogs[iBlog].title}`,
+            blogs: this.state.blogs.filter((blog, i) => i !== iBlog)})
+          setTimeout(() => {
+            this.setState({ infomessage: null })
+          }, 5000)
+        } catch(exception) {
+          console.log('deleting blog', this.state.blogs[iBlog].title,' failed with ', exception)
+          this.setState({
+            error: 'blogin poisto epäonnistui' + exception,
+          })
+          setTimeout(() => {
+            this.setState({ error: null })
+          }, 5000)
+        }
+      }
+    }
+  }
+
+  handleFieldChange = (event) => {
     this.setState({ [event.target.name]: event.target.value })
   }
 
-  blogList = {}
+  blogList = {}  // references to children components
 
   render() {
     if (this.state.user === null) {
@@ -154,18 +180,27 @@ class App extends React.Component {
       )
     }
 
+    const blogsSortedByLikes = this.state.blogs.sort((x, y) => y.likes - x.likes)
+
     return (
       <div>
         Kirjautunut käyttäjä on <b>{this.state.user.name}  </b>
         <button type="button" onClick={this.logout}>kirjaudu ulos</button>
         <h2>Blogit</h2>
-        {this.state.blogs.map(blog => {
+        {blogsSortedByLikes.map(blog => {
           return ( 
-            <TogglableLine key={'line'+blog.id} label={blog.title} ref={component => this.blogList[blog.id] = component} blog={blog}>
-              <Blog /* key={'blog'+blog.id} */ blog={blog} likeIncrease={this.updateBlog(blog.id)}/>
+            <TogglableLine 
+              key={'line'+blog.id} 
+              linetext={blog.title} 
+              ref={component => this.blogList[blog.id] = component}
+              showactionbutton={false}
+              actionlable={'Poista'}
+              actionbutton={this.deleteBlog(blog.id)}>
+                <Blog key={'blog'+blog.id} blog={blog} likeIncrease={this.updateBlog(blog.id)}/>
             </TogglableLine>
           )}
         )}
+        <Notification message={this.state.error} type='error'/>
         <br></br>
         <div>
           <Togglable buttonLabel="Lisää blogi" ref={component => this.blogForm = component}>
@@ -177,6 +212,7 @@ class App extends React.Component {
               url={this.state.url}
               message={this.state.error} />
           </Togglable>
+          <br></br>
           <Notification message={this.state.infomessage} type='info'/>
         </div>
       </div>
