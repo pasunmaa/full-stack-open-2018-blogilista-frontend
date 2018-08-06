@@ -81,6 +81,7 @@ class App extends React.Component {
         author: this.state.author,
         url: this.state.url
       })
+      //console.log(newBlog)
       this.setState({ 
         blogs: this.state.blogs.concat(newBlog),
         title: '', author: '', url: '',
@@ -193,7 +194,7 @@ class App extends React.Component {
               key={'line'+blog.id} 
               linetext={blog.title} 
               ref={component => this.blogList[blog.id] = component}
-              showactionbutton={false}
+              showactionbutton={blog.user ? this.state.user.username === blog.user.username : true}
               actionlable={'Poista'}
               actionbutton={this.deleteBlog(blog.id)}>
                 <Blog key={'blog'+blog.id} blog={blog} likeIncrease={this.updateBlog(blog.id)}/>

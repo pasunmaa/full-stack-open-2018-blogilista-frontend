@@ -27,7 +27,8 @@ class TogglableLine extends React.Component {
                 {this.props.linetext}
               </td>
               <td>
-                <button onClick={this.props.actionbutton}>{this.props.actionlable}</button>
+                {this.props.showactionbutton ? 
+                  <button onClick={this.props.actionbutton}>{this.props.actionlable}</button> : ''}
               </td>
             </tr>
             </tbody>
@@ -41,7 +42,8 @@ class TogglableLine extends React.Component {
                 {this.props.linetext}
               </td>
               <td>
-                <button onClick={this.props.actionbutton}>{this.props.actionlable}</button>
+                {this.props.showactionbutton ? 
+                  <button onClick={this.props.actionbutton}>{this.props.actionlable}</button> : ''}
               </td>
             </tr>
             </tbody>
