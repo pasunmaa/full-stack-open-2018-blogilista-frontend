@@ -19,7 +19,7 @@ class TogglableLine extends React.Component {
 
     return (
       <div>
-        <div style={hideWhenVisible}>
+        <div style={hideWhenVisible} className='togglableLine'>
           <table>
             <tbody>
             <tr>
@@ -34,7 +34,7 @@ class TogglableLine extends React.Component {
             </tbody>
           </table>
         </div>
-        <div style={showWhenVisible}>
+        <div style={showWhenVisible} className='togglableContent'>
           <table>
             <tbody>
             <tr>

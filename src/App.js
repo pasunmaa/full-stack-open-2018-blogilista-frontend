@@ -190,14 +190,17 @@ class App extends React.Component {
         <h2>Blogit</h2>
         {blogsSortedByLikes.map(blog => {
           return ( 
-            <TogglableLine 
+            <TogglableLine className="blogshort"
               key={'line'+blog.id} 
               linetext={blog.title} 
               ref={component => this.blogList[blog.id] = component}
               showactionbutton={blog.user ? this.state.user.username === blog.user.username : true}
               actionlable={'Poista'}
               actionbutton={this.deleteBlog(blog.id)}>
-                <Blog key={'blog'+blog.id} blog={blog} likeIncrease={this.updateBlog(blog.id)}/>
+                <Blog className="bloglong" 
+                  key={'blog'+blog.id} 
+                  blog={blog} 
+                  likeIncrease={this.updateBlog(blog.id)}/>
             </TogglableLine>
           )}
         )}
