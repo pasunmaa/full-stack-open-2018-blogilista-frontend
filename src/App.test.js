@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import window from './setupTests'
+//import window from './setupTests'
 jest.mock('./services/blogs')
 import Login from './components/Login'
 import App from './App'
@@ -11,20 +11,20 @@ describe('<App />', () => {
   let app
 
   beforeAll(() => {
-    app = mount(<App />)
-    console.log(app.debug())
+    //app = mount(<App />)
+    //console.log(app.debug())
     //window.localStorage.clear()
   })
 
   describe('when user is not logged', () => {
     beforeEach(() => {
       // luo sovellus siten, että käyttäjä ei ole kirjautuneena
-      window.localStorage.clear()
+      //window.localStorage.clear()
+      app = mount(<App />)
+      console.log(app.debug())
     })
 
     it('only login form is rendered', () => {
-      //console.log(app.debug())
-      app.update()
       /* const loginView = app.find(Login)
       expect(loginView).toContain('käyttäjätunnus')
       expect(loginView).toContain('salasana') */
@@ -42,8 +42,9 @@ describe('<App />', () => {
         token: '1231231214',
         name: 'Petri Asunmaa'
       }
-
-      window.localStorage.setItem('loggedBlogAppUser', JSON.stringify(user))
+      /* window. */localStorage.setItem('loggedAppUser', JSON.stringify(user))
+      app = mount(<App />)
+      console.log(app.debug())
     })
 
     it('all blogs are rendered', () => {
