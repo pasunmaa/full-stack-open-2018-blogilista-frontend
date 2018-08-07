@@ -1,8 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-//import Adapter from 'enzyme-adapter-react-16'
-import TogglableLine from './components/TogglableLine'
-import Blog from './components/Blog'
+import TogglableLine from '../components/TogglableLine'
+import Blog from '../components/Blog'
 
 describe.only('Blog and TogglableLine component', () => {
   let togglableLine
@@ -56,7 +55,7 @@ describe.only('Blog and TogglableLine component', () => {
 
   it('initially shows only title', () => {
     //const appComponent = shallow(<App note={note} />)
-    const shortDiv = togglableLine.find('.togglableLine')
+    const shortDiv = togglableLine.find('.clickableLine')
     const longDiv = togglableLine.find('.togglableContent')
     //console.log(shortDiv.debug(), shortDiv.text())//, shortDiv.html())
 
@@ -67,7 +66,7 @@ describe.only('Blog and TogglableLine component', () => {
   it('shows the details after clicking the line', () => {
     //const appComponent = shallow(<App note={note} />)
     // haetaan klikattava osa komponentista
-    const shortDiv = togglableLine.find('.togglableLine')
+    const shortDiv = togglableLine.find('.clickableLine')
     //console.log(shortDiv.html())
     shortDiv.simulate('click')
 

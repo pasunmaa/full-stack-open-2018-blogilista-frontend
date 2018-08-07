@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 const Login = ( { username, password, login, onChange, message } ) => {
   return (
-    <div>
+    <div className='login'>
       <h2>Kirjaudu sovellukseen</h2>
       <form onSubmit={login}>
         <div>

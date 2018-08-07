@@ -184,7 +184,7 @@ class App extends React.Component {
     const blogsSortedByLikes = this.state.blogs.sort((x, y) => y.likes - x.likes)
 
     return (
-      <div>
+      <div className='loggedInUserView'>
         Kirjautunut käyttäjä on <b>{this.state.user.name}  </b>
         <button type="button" onClick={this.logout}>kirjaudu ulos</button>
         <h2>Blogit</h2>
