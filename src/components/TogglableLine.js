@@ -19,7 +19,7 @@ class TogglableLine extends React.Component {
 
     return (
       <div>
-        <div style={hideWhenVisible} className='togglableLine'>
+        <div style={hideWhenVisible} className='clickableLine'>
           <table>
             <tbody>
             <tr>
