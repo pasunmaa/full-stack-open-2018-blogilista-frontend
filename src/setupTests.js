@@ -15,6 +15,7 @@ const localStorageMock = {
   clear: /* () =>  */savedItems = {}
 }
 
-window.localStorage = localStorageMock
+//window.localStorage = localStorageMock
+global.localStorage = localStorageMock
 
 //export default window
