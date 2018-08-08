@@ -41,7 +41,7 @@ const getAll = () => {
   return Promise.resolve(blogs)
 }
 
-const setToken = (newToken) => {
+const setToken = (newToken) => {  // eslint-disable-line
 }
 
 export default { getAll, setToken, blogs }

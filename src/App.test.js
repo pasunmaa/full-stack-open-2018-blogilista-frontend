@@ -6,6 +6,8 @@ import Login from './components/Login'
 import Blog from './components/Blog'
 import App from './App'
 
+// ignore eslint warning about localStorage being undefined
+/* global localStorage:false */
 
 describe('<App />', () => {
   // Luo App
