@@ -163,14 +163,7 @@ class App extends React.Component {
         <h1>Blogisovellus</h1>
         <Router>
           <div>
-            <div>
-              <Navi />
-              <span>
-                &nbsp;
-                <b>{this.state.user.name}</b> kirjautuneena. &nbsp;
-                <button type="button" onClick={this.logout}>kirjaudu ulos</button>
-              </span>
-            </div>
+            <Navi name={this.state.user.name} logout={this.logout}/>
             <Route exact path="/" render={() =>
               <div>
                 <div>
