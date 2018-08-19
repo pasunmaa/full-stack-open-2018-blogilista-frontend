@@ -1,6 +1,8 @@
 import React from 'react'
+import { Provider } from 'react-redux'
 import { mount } from 'enzyme'
 jest.mock('./services/blogs')
+import store from './store'
 import blogService from './services/blogs'
 import Login from './components/Login'
 import Blog from './components/Blog'
@@ -17,9 +19,11 @@ describe('<App />', () => {
     beforeEach(() => {
       // luo sovellus siten, että käyttäjä ei ole kirjautuneena
       localStorage.clear
-      app = mount(<App />)
-      //console.log(app.debug())
-      //console.log(app.text())
+      app = mount(
+        <Provider store={store}>
+          <App />
+        </Provider>
+      )
     })
 
     it('only login form is rendered', () => {
@@ -27,7 +31,7 @@ describe('<App />', () => {
       expect(app.text()).toContain('salasana')
       expect(app.html()).not.toContain('<h2>Blogit</h2>')
       const loginView = app.find(Login)
-      expect(loginView.length).toBe(1)
+      expect(loginView).toHaveLength(1)
       expect(app.find('.login').exists()).toEqual(true)
       expect(app.find('.loggedInUserView').exists()).toEqual(false)
     })
@@ -42,8 +46,11 @@ describe('<App />', () => {
         name: 'Petri Asunmaa'
       }
       /* window. */localStorage.setItem('loggedAppUser', JSON.stringify(user))
-      app = mount(<App />)
-      //console.log(app.debug())
+      app = mount(
+        <Provider store={store}>
+          <App />
+        </Provider>
+      )
     })
 
     it('login view is not shown', () => {
@@ -51,7 +58,7 @@ describe('<App />', () => {
       expect(app.text()).not.toContain('käyttäjätunnus')
       expect(app.text()).not.toContain('salasana')
       const loginView = app.find(Login)
-      expect(loginView.length).toBe(0)
+      expect(loginView).toHaveLength(0)
     })
 
     it('all blogs are rendered', () => {
@@ -59,7 +66,7 @@ describe('<App />', () => {
       expect(app.text()).toContain('Kirjautunut käyttäjä on')
       expect(app.html()).toContain('<h2>Blogit</h2>')
       const blogs = app.find(Blog)
-      expect(blogs.length).toBe(blogService.blogs.length)
+      expect(blogs).toHaveLength(blogService.blogs.length)
     })
   })
 })
