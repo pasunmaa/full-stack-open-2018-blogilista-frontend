@@ -36,26 +36,23 @@ const usersAtStart = [
   }
 ]
 
-
-/* export const anecdoteCreation = (content) => {
-  return async (dispatch) => {
-    const newAnecdote = await anecdoteService.createNew(content)
-    dispatch({
-      type: 'CREATE',
-      data: newAnecdote //{ ...content }
-    })
-  }
+const initialState = {
+  selecteduserid: null,
+  users: usersAtStart
 }
 
-export const anecdoteVoting = (id, content, votes) => {
-  return async (dispatch) => {
-    await anecdoteService.anecdoteVote(id, content, votes)
+export const setSelectedUser = (id) => {
+  //this.setState({ selecteduserid: id })
+  console.log(id)
+  return (dispatch) => {
+    // SET ROUTE PATH
+    //<Redirect to='/dashboard' />
     dispatch({
-      type: 'VOTE',
+      type: 'SELECT_USER',
       data: id
     })
   }
-} */
+}
 
 export const userInitialization = () => {
   return async (dispatch) => {
@@ -68,21 +65,13 @@ export const userInitialization = () => {
   }
 }
 
-const reducer = (store = usersAtStart/* [] */, action) => {
+const reducer = (store = initialState, action) => {
   switch (action.type) {
-  case 'VOTE':
-  {
+  case 'SELECT_USER':
     //console.log(action)
-    const old = store.filter(a => a.id !== action.data) // action.data.id)
-    const voted = store.find(a => a.id === action.data) // action.data.id)
-    //console.log([...old, { ...voted, votes: voted.votes+1 } ])
-    return [...old, { ...voted, votes: voted.votes+1 } ]
-  }
-  case 'CREATE':
-    //console.log(action)
-    return [...store, { ...action.data }]
+    return { selecteduserid: action.data, users: [...store.users] }
   case 'INIT_USERS':
-    return action.data
+    return { selecteduserid: store.selecteduserid, users: [ ...action.data ] }
   default:
     return store
   }

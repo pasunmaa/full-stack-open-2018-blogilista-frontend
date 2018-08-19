@@ -1,20 +1,34 @@
 import React from 'react'
-import { showNotification } from '../reducers/notificationReducer'
 import { connect } from 'react-redux'
-
+import { showNotification } from '../reducers/notificationReducer'
+import { setSelectedUser } from '../reducers/userReducer'
 
 const UserList = (props) => {
+  const routeToUser = (id) => () => {
+    //console.log(id, props)
+    props.setSelectedUser(id)
+    props.history.history.push(`/users/${id}`)
+  }
+
   return (
     <div>
       <h2>Users</h2>
-      <strong>name  blogs added</strong>
-      {props.users.sort((a, b) => b.blogs.length - a.blogs.length).map(user =>
-        <div key={user._id}>
-          <div>
-            {user.name} {user.blogs.length}
-          </div>
-        </div>
-      )}
+      <table>
+        <thead>
+          <tr>
+            <td><strong>name</strong></td>
+            <td><strong>blogs added</strong></td>
+          </tr>
+        </thead>
+        <tbody>
+          {props.users.sort((a, b) => b.blogs.length - a.blogs.length).map(user =>
+            <tr key={user._id} onClick={routeToUser(user._id)} >
+              <td> {user.name} </td>
+              <td> {user.blogs.length} </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
     </div>
   )
 }
@@ -22,12 +36,13 @@ const UserList = (props) => {
 const mapStateToProps = (state) => {
   //console.log(state)
   return {
-    users: state.users
+    users: state.userdata.users,
   }
 }
 
 const mapDispatchToProps = {
-  showNotification
+  showNotification,
+  setSelectedUser
 }
 
 export default connect(

@@ -7,7 +7,7 @@ import userReducer from './reducers/userReducer'
 
 const reducer = combineReducers({
   notification: notificationReducer,
-  users: userReducer,
+  userdata: userReducer,
   //blogs: anecdoteReducer
 })
 //console.log(store.getState())

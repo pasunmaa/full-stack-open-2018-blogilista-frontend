@@ -13,6 +13,7 @@ import TogglableLine from './components/TogglableLine'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import UserList from './components/UserList'
+import User from './components/User'
 import Navi from './components/Navi'
 
 class App extends React.Component {
@@ -199,17 +200,29 @@ class App extends React.Component {
                 </div>
               </div>
             } />
-            <Route path="/users" render={() => <UserList />} />
+            <Route
+              exact path="/users"
+              render={({ history }) => <UserList history={{ history }} />} />
+            <Route
+              path={`/users/:${this.props.selecteduserid}`}
+              render={() => <User id={this.props.selecteduserid} />} />
           </div>
         </Router>
-
         <Notification />
       </div>
     )
   }
 }
 
+const mapStateToProps = (state) => {
+  //console.log(state)
+  return {
+    selecteduserid: state.userdata.selecteduserid,
+    users: state.userdata.users
+  }
+}
+
 export default connect(
-  null,
+  mapStateToProps,
   { showNotification, userInitialization }
 )(App)
