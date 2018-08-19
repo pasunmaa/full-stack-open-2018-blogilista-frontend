@@ -1,8 +1,7 @@
 import React from 'react'
-import Notification from './Notification'
 import PropTypes from 'prop-types'
 
-const BlogForm = ({ onSubmit, onChange, title, author, url, message }) => {
+const BlogForm = ({ onSubmit, onChange, title, author, url }) => {
   return (
     <div>
       <h2>Lisää uusi blogi</h2>
@@ -16,8 +15,6 @@ const BlogForm = ({ onSubmit, onChange, title, author, url, message }) => {
         <br></br>
         <button type="submit">luo</button>
       </form>
-
-      <Notification message={message} type='error' />
     </div>
   )
 }
@@ -28,7 +25,6 @@ BlogForm.propTypes = {
   url: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  message: PropTypes.string
 }
 
 export default BlogForm

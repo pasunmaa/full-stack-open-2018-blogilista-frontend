@@ -1,6 +1,7 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import './notification.css'
-import PropTypes from 'prop-types'
+//import PropTypes from 'prop-types'
 
 const Notification = ({ message, type }) => {
   if (message === null|| message === '') {
@@ -16,9 +17,22 @@ const Notification = ({ message, type }) => {
   )
 }
 
-Notification.propTypes = {
+/* Notification.propTypes = {
   message: PropTypes.string,
   type: PropTypes.string
+} */
+
+const mapStateToProps = (state) => {
+  return {
+    message: state.notification.message,
+    type: state.notification.notificationtype,
+    filter: state.filter,
+    anecdotes: state.anecdotes
+  }
 }
 
-export default Notification
+export default connect(
+  mapStateToProps,
+  null
+)(Notification)
+

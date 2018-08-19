@@ -1,8 +1,7 @@
 import React from 'react'
-import Notification from './Notification'
 import PropTypes from 'prop-types'
 
-const Login = ( { username, password, login, onChange, message } ) => {
+const Login = ( { username, password, login, onChange } ) => {
   return (
     <div className='login'>
       <h2>Kirjaudu sovellukseen</h2>
@@ -26,7 +25,6 @@ const Login = ( { username, password, login, onChange, message } ) => {
           />
         </div>
         <button type="submit">kirjaudu</button>
-        <Notification message={message} type='error'/>
       </form>
     </div>
   )
@@ -37,7 +35,6 @@ Login.propTypes = {
   password: PropTypes.string.isRequired,
   login: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  message: PropTypes.string
 }
 
 export default Login
