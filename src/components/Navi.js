@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 const Navi = () => {
   const menuStyle = {
@@ -13,10 +13,10 @@ const Navi = () => {
   }
 
   return (
-    <div style={menuStyle}>
+    <span className='navi' style={menuStyle}>
       <NavLink exact activeStyle={activeStyle} to="/">blogs</NavLink> &nbsp;
       <NavLink exact activeStyle={activeStyle} to="/users">users</NavLink> &nbsp;
-    </div>
+    </span>
   )
 }
 

@@ -5,7 +5,6 @@ import { showNotification } from './reducers/notificationReducer'
 import { userInitialization } from './reducers/userReducer'
 
 import Login from './components/Login'
-import Navi from './components/Login'
 import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
@@ -14,6 +13,7 @@ import TogglableLine from './components/TogglableLine'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import UserList from './components/UserList'
+import Navi from './components/Navi'
 
 class App extends React.Component {
   constructor(props) {
@@ -141,9 +141,12 @@ class App extends React.Component {
   blogList = {}  // references to children components
 
   render() {
+    const blogsSortedByLikes = this.state.blogs.sort((x, y) => y.likes - x.likes)
+
     if (this.state.user === null) {
       return (
         <div>
+          <h1>Blogisovellus</h1>
           <Login
             username={this.state.username}
             password={this.state.password}
@@ -155,16 +158,19 @@ class App extends React.Component {
       )
     }
 
-    const blogsSortedByLikes = this.state.blogs.sort((x, y) => y.likes - x.likes)
-
     return (
       <div className='loggedInUserView'>
-        Kirjautunut käyttäjä on <b>{this.state.user.name}  </b>
-        <button type="button" onClick={this.logout}>kirjaudu ulos</button>
+        <h1>Blogisovellus</h1>
         <Router>
           <div>
-            {/* <Navi /> */}
-
+            <div>
+              <Navi />
+              <span>
+                &nbsp;
+                <b>{this.state.user.name}</b> kirjautuneena. &nbsp;
+                <button type="button" onClick={this.logout}>kirjaudu ulos</button>
+              </span>
+            </div>
             <Route exact path="/" render={() =>
               <div>
                 <div>
