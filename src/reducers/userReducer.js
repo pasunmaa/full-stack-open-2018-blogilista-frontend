@@ -42,11 +42,8 @@ const initialState = {
 }
 
 export const setSelectedUser = (id) => {
-  //this.setState({ selecteduserid: id })
-  console.log(id)
+  //console.log(id)
   return (dispatch) => {
-    // SET ROUTE PATH
-    //<Redirect to='/dashboard' />
     dispatch({
       type: 'SELECT_USER',
       data: id

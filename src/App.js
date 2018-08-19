@@ -205,7 +205,10 @@ class App extends React.Component {
               render={({ history }) => <UserList history={{ history }} />} />
             <Route
               path={`/users/:${this.props.selecteduserid}`}
-              render={() => <User id={this.props.selecteduserid} />} />
+              render={({ history }) =>
+                <User
+                  id={this.props.selecteduserid}
+                  history={ history } />} />
           </div>
         </Router>
         <Notification />

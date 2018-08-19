@@ -1,13 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { showNotification } from '../reducers/notificationReducer'
+import { userInitialization } from '../reducers/userReducer'
 
-const User = ({ users, id }) => {
+const User = ({ users, id, history }) => {
+  if (!id) { // if id is not defined, check if there is a meaningful id on address line
+    id = history.location.pathname.replace('/users/', '')
+    //console.log(id)
+  }
+  if (!users)
+    this.props.userInitialization()
+
   const user = users.find(user => user._id === id)
   if (user)
     return (
       <div>
-        <br></br>
         <h2>{user.name}</h2>
         <h3>Added blogs</h3>
         {user.blogs.map(blog => <li key={blog._id} >{blog.title} by {blog.author}</li>)}
@@ -26,11 +32,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = {
-  showNotification
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { userInitialization }
 )(User)
