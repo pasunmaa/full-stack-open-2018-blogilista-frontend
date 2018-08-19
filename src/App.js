@@ -1,9 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { showNotification } from './reducers/notificationReducer'
-//import { blogInitialization } from './reducers/blogReducer'
+import { userInitialization } from './reducers/userReducer'
 
 import Login from './components/Login'
+import Navi from './components/Login'
 import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
@@ -11,6 +13,7 @@ import Togglable from './components/Togglable'
 import TogglableLine from './components/TogglableLine'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import UserList from './components/UserList'
 
 class App extends React.Component {
   constructor(props) {
@@ -27,7 +30,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    //this.props.blogInitialization()
+    this.props.userInitialization()
 
     blogService.getAll().then(blogs =>
       this.setState({ blogs })
@@ -158,35 +161,48 @@ class App extends React.Component {
       <div className='loggedInUserView'>
         Kirjautunut käyttäjä on <b>{this.state.user.name}  </b>
         <button type="button" onClick={this.logout}>kirjaudu ulos</button>
-        <h2>Blogit</h2>
-        {blogsSortedByLikes.map(blog => {
-          return (
-            <TogglableLine className="blogshort"
-              key={'line'+blog.id}
-              linetext={blog.title}
-              ref={component => this.blogList[blog.id] = component}
-              showactionbutton={blog.user ? this.state.user.username === blog.user.username : true}
-              actionlable={'Poista'}
-              actionbutton={this.deleteBlog(blog.id)}>
-              <Blog className="bloglong"
-                key={'blog'+blog.id}
-                blog={blog}
-                likeIncrease={this.updateBlog(blog.id)}/>
-            </TogglableLine>
-          )}
-        )}
-        <br></br>
-        <div>
-          <Togglable buttonLabel="Lisää blogi" ref={component => this.blogForm = component}>
-            <BlogForm
-              onSubmit={this.createNew}
-              onChange={this.handleFieldChange}
-              title={this.state.title}
-              author={this.state.author}
-              url={this.state.url} />
-          </Togglable>
-          <br></br>
-        </div>
+        <Router>
+          <div>
+            {/* <Navi /> */}
+
+            <Route exact path="/" render={() =>
+              <div>
+                <div>
+                  <h2>Blogit</h2>
+                  {blogsSortedByLikes.map(blog => {
+                    return (
+                      <TogglableLine className="blogshort"
+                        key={'line'+blog.id}
+                        linetext={blog.title}
+                        ref={component => this.blogList[blog.id] = component}
+                        showactionbutton={blog.user ? this.state.user.username === blog.user.username : true}
+                        actionlable={'Poista'}
+                        actionbutton={this.deleteBlog(blog.id)}>
+                        <Blog className="bloglong"
+                          key={'blog'+blog.id}
+                          blog={blog}
+                          likeIncrease={this.updateBlog(blog.id)}/>
+                      </TogglableLine>
+                    )}
+                  )}
+                </div>
+                <div>
+                  <br></br>
+                  <Togglable buttonLabel="Lisää blogi" ref={component => this.blogForm = component}>
+                    <BlogForm
+                      onSubmit={this.createNew}
+                      onChange={this.handleFieldChange}
+                      title={this.state.title}
+                      author={this.state.author}
+                      url={this.state.url} />
+                  </Togglable>
+                  <br></br>
+                </div>
+              </div>
+            } />
+            <Route path="/users" render={() => <UserList />} />
+          </div>
+        </Router>
 
         <Notification />
       </div>
@@ -196,5 +212,5 @@ class App extends React.Component {
 
 export default connect(
   null,
-  { showNotification }
+  { showNotification, userInitialization }
 )(App)
