@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { showNotification } from './reducers/notificationReducer'
-import { userInitialization } from './reducers/userReducer'
+import { userInitialization, userBlogAdd, userBlogRemove } from './reducers/userReducer'
 
 import Login from './components/Login'
 import Blog from './components/Blog'
@@ -80,10 +80,13 @@ class App extends React.Component {
         author: this.state.author,
         url: this.state.url
       })
-      //console.log(newBlog)
+      const userId = newBlog.user._id
+      //console.log(userId, newBlog)
       this.setState({
         blogs: this.state.blogs.concat(newBlog),
         title: '', author: '', url: '' })
+      delete newBlog.user // property is not needed by userBlogAdd
+      this.props.userBlogAdd(userId, newBlog)
       this.blogForm.toggleVisibility()
       this.props.showNotification(`Lisättiin uusi blogi: ${newBlog.title}`, 5)
     } catch(exception) {
@@ -126,6 +129,7 @@ class App extends React.Component {
         try{
           await blogService.deleteBlog(this.state.blogs[iBlog].id)
           this.props.showNotification(`Poistettiin blogi: ${this.state.blogs[iBlog].title}`, 5)
+          this.props.userBlogRemove(this.state.blogs[iBlog].user._id, blogID)
           this.setState({ blogs: this.state.blogs.filter((blog, i) => i !== iBlog) })
         } catch(exception) {
           console.log('deleting blog failed with ', exception)
@@ -227,5 +231,5 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps,
-  { showNotification, userInitialization }
+  { showNotification, userInitialization, userBlogAdd, userBlogRemove }
 )(App)

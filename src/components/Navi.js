@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 const Navi = ( props ) => {
   const menuStyle = {
-    backgroundColor: 'lightblue',
+    backgroundColor: 'lightgreen',
     padding: 10
   }
   const activeStyle = {

@@ -51,6 +51,25 @@ export const setSelectedUser = (id) => {
   }
 }
 
+export const userBlogRemove = (userId, blogId) => {
+  return (dispatch) => {
+    //console.log(userId, blogId)
+    dispatch({
+      type: 'REMOVE_USER_BLOG',
+      data: { userId, blogId }
+    })
+  }
+}
+
+export const userBlogAdd = (userId, newBlog) => {
+  return (dispatch) => {
+    dispatch({
+      type: 'ADD_USER_BLOG',
+      data: { userId, newBlog }
+    })
+  }
+}
+
 export const userInitialization = () => {
   return async (dispatch) => {
     const users = await userService.getAll()
@@ -62,11 +81,36 @@ export const userInitialization = () => {
   }
 }
 
+const removeBlogFromUser = (user, blogId) => {
+  const newblogs = user.blogs.filter(blog => blog._id !== blogId)
+  const newuser = { ...user, blogs: newblogs }
+  return newuser
+}
+
 const reducer = (store = initialState, action) => {
   switch (action.type) {
-  case 'SELECT_USER':
+  case 'SELECT_USER': // sets an active selected user
     //console.log(action)
     return { selecteduserid: action.data, users: [...store.users] }
+  case 'REMOVE_USER_BLOG':
+    return {
+      selecteduserid: store.selecteduserid,
+      users: store.users.map(user =>
+        user._id !== action.data.userId ?
+          user :
+          removeBlogFromUser(user, action.data.blogId)
+      )
+    }
+  case 'ADD_USER_BLOG': {
+    return  {
+      selecteduserid: store.selecteduserid,
+      users: store.users.map(user =>
+        user._id !== action.data.userId ?
+          user :
+          { ...user, blogs: [...user.blogs, action.data.newBlog] }
+      )
+    }
+  }
   case 'INIT_USERS':
     return { selecteduserid: store.selecteduserid, users: [ ...action.data ] }
   default:

@@ -10,7 +10,7 @@ class TogglableLine extends React.Component {
   }
 
   toggleVisibility = () => {
-    this.setState({visible: !this.state.visible})
+    this.setState({ visible: !this.state.visible })
   }
 
   render() {
@@ -22,30 +22,30 @@ class TogglableLine extends React.Component {
         <div style={hideWhenVisible} className='clickableLine'>
           <table>
             <tbody>
-            <tr>
-              <td onClick={this.toggleVisibility}>
-                {this.props.linetext}
-              </td>
-              <td>
-                {this.props.showactionbutton ? 
-                  <button onClick={this.props.actionbutton}>{this.props.actionlable}</button> : ''}
-              </td>
-            </tr>
+              <tr>
+                <td onClick={this.toggleVisibility}>
+                  {this.props.linetext}
+                </td>
+                <td>
+                  {this.props.showactionbutton ?
+                    <button onClick={this.props.actionbutton}>{this.props.actionlable}</button> : ''}
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
         <div style={showWhenVisible} className='togglableContent'>
           <table>
             <tbody>
-            <tr>
-              <td onClick={this.toggleVisibility}>
-                {this.props.linetext}
-              </td>
-              <td>
-                {this.props.showactionbutton ? 
-                  <button onClick={this.props.actionbutton}>{this.props.actionlable}</button> : ''}
-              </td>
-            </tr>
+              <tr>
+                <td onClick={this.toggleVisibility}>
+                  {this.props.linetext}
+                </td>
+                <td>
+                  {this.props.showactionbutton ?
+                    <button onClick={this.props.actionbutton}>{this.props.actionlable}</button> : ''}
+                </td>
+              </tr>
             </tbody>
           </table>
           {this.props.children}
