@@ -125,8 +125,8 @@ class App extends React.Component {
       if (window.confirm('Haluatko varmasti poistaa blogin ', this.state.blogs[iBlog].title)) {
         try{
           await blogService.deleteBlog(this.state.blogs[iBlog].id)
-          this.setState({ blogs: this.state.blogs.filter((blog, i) => i !== iBlog) })
           this.props.showNotification(`Poistettiin blogi: ${this.state.blogs[iBlog].title}`, 5)
+          this.setState({ blogs: this.state.blogs.filter((blog, i) => i !== iBlog) })
         } catch(exception) {
           console.log('deleting blog failed with ', exception)
           this.props.showNotification(`blogin poisto epäonnistui: ${exception}`, 5, 'error')
