@@ -24,21 +24,23 @@ const lineStyle = {
 class Blog extends React.Component {
   id = ''
   async componentDidMount() {
-    //if (!this.props.blogs)
     await this.props.blogInitialization()
-    console.log('componentDidMount')
+    //console.log('componentDidMount')
+  }
+
+  deleteBackToBlogs = () => {
+    this.props.deleteBlog(this.id)
+    this.props.history.push('/')
   }
 
   render() {
     if (!this.props.id) { // if blog is not defined, check if there is a meaningful id on address line
       this.id = this.props.history.location.pathname.replace('/blogs/', '')
-      console.log(this.id)
     }
     else
       this.id = this.props.id
     const blog = this.props.blogs.find(blog => blog.id === this.id)
-    console.log(blog, this.props.blogs)
-
+    if (!blog) return (null) // if blog fetching from server is not completed do not render anything
     return (
       <div style={blogStyle} key={blog.id}>
         <div>{blog.title} <strong>by</strong> {blog.author}</div>
@@ -47,14 +49,12 @@ class Blog extends React.Component {
           {blog.likes} tykkäystä &nbsp;
           <button onClick={this.props.likeIncrease}>tykkää</button>
         </div>
-        <div style={lineStyle}>lisätty by {blog.user ? blog.user.name : 'EI TIEDOSSA'}</div>
-        <div style={lineStyle}>
-          {(!blog.useranme || blog.user.username === this.props.currentUser) ? 
-            <button onClick={this.props.deleteBlog(blog.id)}>poista</button> : 
-            {''}
+        <div style={lineStyle}>lisätty by {blog.user ? blog.user.name : 'EI TIEDOSSA'}
+          &nbsp;
+          {(blog.user !== undefined && blog.user.username === this.props.currentUser) ?
+            <button onClick={this.deleteBackToBlogs}>poista</button> : <span></span>
           }
         </div>
-        {blog.user ? this.state.user.username === blog.user.username : true}
       </div>
     )
   }
@@ -62,7 +62,9 @@ class Blog extends React.Component {
 
 Blog.propTypes = {
   id: PropTypes.string,
-  likeIncrease: PropTypes.func.isRequired
+  likeIncrease: PropTypes.func.isRequired,
+  deleteBlog: PropTypes.func.isRequired,
+  currentUser: PropTypes.string.isRequired
 }
 
 export default Blog

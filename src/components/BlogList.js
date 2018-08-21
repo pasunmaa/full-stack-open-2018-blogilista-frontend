@@ -4,10 +4,9 @@ import PropTypes from 'prop-types'
 const BlogList = (props) => {
   //console.log(props)
   const routeToBlog = (id) => () => {
-    console.log(id, props)
+    //console.log(id, props)
     props.setselectedblog(id)
     props.history.push(`/blogs/${id}`)
-    //props.history.history.push(`/users/${id}`)
   }
 
   const blogsSortedByLikes = props.blogs.sort((x, y) => y.likes - x.likes)

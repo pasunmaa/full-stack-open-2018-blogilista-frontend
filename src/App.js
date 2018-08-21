@@ -46,9 +46,12 @@ class App extends React.Component {
   }
 
   blogInitialization = async () => {
-    blogService.getAll().then(blogs =>
+    //console.log('blogInitialization called',this.state.blogs.length)
+    if (!this.state.blogs.length) {
+      const blogs = await blogService.getAll()
       this.setState({ blogs })
-    )
+      //console.log('blogs initialized', this.state.blogs)
+    }
   }
 
   login = async (event) => {
@@ -91,7 +94,7 @@ class App extends React.Component {
       this.setState({
         blogs: this.state.blogs.concat(newBlog),
         title: '', author: '', url: '' })
-      delete newBlog.user // property is not needed by userBlogAdd
+      //delete newBlog.user // property is not needed by userBlogAdd
       this.props.userBlogAdd(userId, newBlog)
       this.blogForm.toggleVisibility()
       this.props.showNotification(`Lisättiin uusi blogi: ${newBlog.title}`, 5)
@@ -212,6 +215,8 @@ class App extends React.Component {
                   blogs={this.state.blogs}
                   blogInitialization={this.blogInitialization}
                   likeIncrease={this.updateBlog(this.state.selectedblogid)}
+                  currentUser={this.state.user.username}
+                  deleteBlog={this.deleteBlog(this.state.selectedblogid)}
                   history={ history } />} />
             <Route
               exact path="/users"
