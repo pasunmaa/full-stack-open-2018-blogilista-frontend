@@ -20,17 +20,19 @@ const lineStyle = {
   paddingLeft: 8,
 }
 
-const Blog = ({ blog, likeIncrease }) => (
-  <div style={blogStyle} key={blog.id}>
-    <div>{blog.title} <strong>by</strong> {blog.author}</div>
-    <div style={urlStyle}><a href={blog.url}>{blog.url}</a></div>
-    <div style={lineStyle}>
-      {blog.likes} tykkäystä &nbsp;
-      <button onClick={likeIncrease}>tykkää</button>
+const Blog = ({ blog, likeIncrease }) => {
+  console.log(blog)
+  return(
+    <div style={blogStyle} key={blog.id}>
+      <div>{blog.title} <strong>by</strong> {blog.author}</div>
+      <div style={urlStyle}><a href={blog.url}>{blog.url}</a></div>
+      <div style={lineStyle}>
+        {blog.likes} tykkäystä &nbsp;
+        <button onClick={likeIncrease}>tykkää</button>
+      </div>
+      <div style={lineStyle}>lisätty by {blog.user ? blog.user.name : 'EI TIEDOSSA'}</div>
     </div>
-    <div style={lineStyle}>lisätty by {blog.user ? blog.user.name : 'EI TIEDOSSA'}</div>
-  </div>
-)
+  )}
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,

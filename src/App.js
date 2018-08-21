@@ -5,11 +5,12 @@ import { showNotification } from './reducers/notificationReducer'
 import { userInitialization, userBlogAdd, userBlogRemove } from './reducers/userReducer'
 
 import Login from './components/Login'
+import BlogList from './components/BlogList'
 import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
-import TogglableLine from './components/TogglableLine'
+//import TogglableLine from './components/TogglableLine'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import UserList from './components/UserList'
@@ -21,6 +22,7 @@ class App extends React.Component {
     super(props)
     this.state = {
       blogs: [],
+      selectedblogid: null,
       username: '',
       password: '',
       user: null,
@@ -146,8 +148,6 @@ class App extends React.Component {
   blogList = {}  // references to children components
 
   render() {
-    const blogsSortedByLikes = this.state.blogs.sort((x, y) => y.likes - x.likes)
-
     if (this.state.user === null) {
       return (
         <div>
@@ -169,41 +169,38 @@ class App extends React.Component {
         <Router>
           <div>
             <Navi name={this.state.user.name} logout={this.logout}/>
-            <Route exact path="/" render={() =>
-              <div>
+            <Route
+              exact path="/"
+              render={({ history }) =>
                 <div>
-                  <h2>Blogit</h2>
-                  {blogsSortedByLikes.map(blog => {
-                    return (
-                      <TogglableLine className="blogshort"
-                        key={'line'+blog.id}
-                        linetext={blog.title}
-                        ref={component => this.blogList[blog.id] = component}
-                        showactionbutton={blog.user ? this.state.user.username === blog.user.username : true}
-                        actionlable={'Poista'}
-                        actionbutton={this.deleteBlog(blog.id)}>
-                        <Blog className="bloglong"
-                          key={'blog'+blog.id}
-                          blog={blog}
-                          likeIncrease={this.updateBlog(blog.id)}/>
-                      </TogglableLine>
-                    )}
-                  )}
+                  <div>
+                    <h2>Blogit</h2>
+                    <BlogList
+                      history={ history }
+                      blogs={this.state.blogs} />
+                  </div>
+                  <div>
+                    <br></br>
+                    <Togglable buttonLabel="Lisää blogi" ref={component => this.blogForm = component}>
+                      <BlogForm
+                        onSubmit={this.createNew}
+                        onChange={this.handleFieldChange}
+                        title={this.state.title}
+                        author={this.state.author}
+                        url={this.state.url} />
+                    </Togglable>
+                    <br></br>
+                  </div>
                 </div>
-                <div>
-                  <br></br>
-                  <Togglable buttonLabel="Lisää blogi" ref={component => this.blogForm = component}>
-                    <BlogForm
-                      onSubmit={this.createNew}
-                      onChange={this.handleFieldChange}
-                      title={this.state.title}
-                      author={this.state.author}
-                      url={this.state.url} />
-                  </Togglable>
-                  <br></br>
-                </div>
-              </div>
-            } />
+              }
+            />
+            {/*  <Route
+              path={`/blogs/:${this.state.selectedblogid}`}
+              render={({ history }) =>
+                <Blog className="bloglong"
+                  blog={this.state.blogs.find(blog => blog.id === this.state.selectedblogid) }
+                  likeIncrease={this.updateBlog(this.state.selectedblogid)}
+                  history={ history } />} /> */}
             <Route
               exact path="/users"
               render={({ history }) => <UserList history={{ history }} />} />
