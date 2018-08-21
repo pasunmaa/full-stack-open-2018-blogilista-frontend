@@ -35,9 +35,7 @@ class App extends React.Component {
   componentDidMount() {
     this.props.userInitialization()
 
-    blogService.getAll().then(blogs =>
-      this.setState({ blogs })
-    )
+    this.blogInitialization()
 
     const loggedUserJSON = window.localStorage.getItem('loggedAppUser')
     if (loggedUserJSON) {
@@ -45,6 +43,12 @@ class App extends React.Component {
       this.setState({ user })
       blogService.setToken(user.token)
     }
+  }
+
+  blogInitialization = async () => {
+    blogService.getAll().then(blogs =>
+      this.setState({ blogs })
+    )
   }
 
   login = async (event) => {
@@ -142,7 +146,8 @@ class App extends React.Component {
   }
 
   setSelectedBlog = (id) => {
-    this.setState({ selecteduserid: id })
+    //console.log(id)
+    this.setState({ selectedblogid: id })
   }
 
   handleFieldChange = (event) => {
@@ -199,13 +204,15 @@ class App extends React.Component {
                 </div>
               }
             />
-            {/*  <Route
+            <Route
               path={`/blogs/:${this.state.selectedblogid}`}
               render={({ history }) =>
                 <Blog className="bloglong"
-                  blog={this.state.blogs.find(blog => blog.id === this.state.selectedblogid) }
+                  id={this.state.selectedblogid}
+                  blogs={this.state.blogs}
+                  blogInitialization={this.blogInitialization}
                   likeIncrease={this.updateBlog(this.state.selectedblogid)}
-                  history={ history } />} /> */}
+                  history={ history } />} />
             <Route
               exact path="/users"
               render={({ history }) => <UserList history={{ history }} />} />
