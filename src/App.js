@@ -141,6 +141,10 @@ class App extends React.Component {
     }
   }
 
+  setSelectedBlog = (id) => {
+    this.setState({ selecteduserid: id })
+  }
+
   handleFieldChange = (event) => {
     this.setState({ [event.target.name]: event.target.value })
   }
@@ -177,7 +181,8 @@ class App extends React.Component {
                     <h2>Blogit</h2>
                     <BlogList
                       history={ history }
-                      blogs={this.state.blogs} />
+                      blogs={this.state.blogs}
+                      setselectedblog={this.setSelectedBlog} />
                   </div>
                   <div>
                     <br></br>
