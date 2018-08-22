@@ -5,11 +5,11 @@ import { showNotification } from './reducers/notificationReducer'
 import { userInitialization, userBlogAdd, userBlogRemove } from './reducers/userReducer'
 
 import Login from './components/Login'
+import BlogList from './components/BlogList'
 import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
-import TogglableLine from './components/TogglableLine'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import UserList from './components/UserList'
@@ -21,6 +21,7 @@ class App extends React.Component {
     super(props)
     this.state = {
       blogs: [],
+      selectedblogid: null,
       username: '',
       password: '',
       user: null,
@@ -33,15 +34,22 @@ class App extends React.Component {
   componentDidMount() {
     this.props.userInitialization()
 
-    blogService.getAll().then(blogs =>
-      this.setState({ blogs })
-    )
+    this.blogInitialization()
 
     const loggedUserJSON = window.localStorage.getItem('loggedAppUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       this.setState({ user })
       blogService.setToken(user.token)
+    }
+  }
+
+  blogInitialization = async () => {
+    //console.log('blogInitialization called',this.state.blogs.length)
+    if (!this.state.blogs.length) {
+      const blogs = await blogService.getAll()
+      this.setState({ blogs })
+      //console.log('blogs initialized', this.state.blogs)
     }
   }
 
@@ -85,7 +93,7 @@ class App extends React.Component {
       this.setState({
         blogs: this.state.blogs.concat(newBlog),
         title: '', author: '', url: '' })
-      delete newBlog.user // property is not needed by userBlogAdd
+      //delete newBlog.user // property is not needed by userBlogAdd
       this.props.userBlogAdd(userId, newBlog)
       this.blogForm.toggleVisibility()
       this.props.showNotification(`Lisättiin uusi blogi: ${newBlog.title}`, 5)
@@ -139,6 +147,11 @@ class App extends React.Component {
     }
   }
 
+  setSelectedBlog = (id) => {
+    //console.log(id)
+    this.setState({ selectedblogid: id })
+  }
+
   handleFieldChange = (event) => {
     this.setState({ [event.target.name]: event.target.value })
   }
@@ -146,8 +159,6 @@ class App extends React.Component {
   blogList = {}  // references to children components
 
   render() {
-    const blogsSortedByLikes = this.state.blogs.sort((x, y) => y.likes - x.likes)
-
     if (this.state.user === null) {
       return (
         <div>
@@ -169,41 +180,43 @@ class App extends React.Component {
         <Router>
           <div>
             <Navi name={this.state.user.name} logout={this.logout}/>
-            <Route exact path="/" render={() =>
-              <div>
+            <Route
+              exact path="/"
+              render={({ history }) =>
                 <div>
-                  <h2>Blogit</h2>
-                  {blogsSortedByLikes.map(blog => {
-                    return (
-                      <TogglableLine className="blogshort"
-                        key={'line'+blog.id}
-                        linetext={blog.title}
-                        ref={component => this.blogList[blog.id] = component}
-                        showactionbutton={blog.user ? this.state.user.username === blog.user.username : true}
-                        actionlable={'Poista'}
-                        actionbutton={this.deleteBlog(blog.id)}>
-                        <Blog className="bloglong"
-                          key={'blog'+blog.id}
-                          blog={blog}
-                          likeIncrease={this.updateBlog(blog.id)}/>
-                      </TogglableLine>
-                    )}
-                  )}
+                  <div>
+                    <h2>Blogit</h2>
+                    <BlogList
+                      history={ history }
+                      blogs={this.state.blogs}
+                      setselectedblog={this.setSelectedBlog} />
+                  </div>
+                  <div>
+                    <br></br>
+                    <Togglable buttonLabel="Lisää blogi" ref={component => this.blogForm = component}>
+                      <BlogForm
+                        onSubmit={this.createNew}
+                        onChange={this.handleFieldChange}
+                        title={this.state.title}
+                        author={this.state.author}
+                        url={this.state.url} />
+                    </Togglable>
+                    <br></br>
+                  </div>
                 </div>
-                <div>
-                  <br></br>
-                  <Togglable buttonLabel="Lisää blogi" ref={component => this.blogForm = component}>
-                    <BlogForm
-                      onSubmit={this.createNew}
-                      onChange={this.handleFieldChange}
-                      title={this.state.title}
-                      author={this.state.author}
-                      url={this.state.url} />
-                  </Togglable>
-                  <br></br>
-                </div>
-              </div>
-            } />
+              }
+            />
+            <Route
+              path={`/blogs/:${this.state.selectedblogid}`}
+              render={({ history }) =>
+                <Blog className="bloglong"
+                  id={this.state.selectedblogid}
+                  blogs={this.state.blogs}
+                  blogInitialization={this.blogInitialization}
+                  likeIncrease={this.updateBlog(this.state.selectedblogid)}
+                  currentUser={this.state.user.username}
+                  deleteBlog={this.deleteBlog(this.state.selectedblogid)}
+                  history={ history } />} />
             <Route
               exact path="/users"
               render={({ history }) => <UserList history={{ history }} />} />

@@ -5,7 +5,6 @@ jest.mock('./services/blogs')
 import store from './store'
 import blogService from './services/blogs'
 import Login from './components/Login'
-import Blog from './components/Blog'
 import App from './App'
 
 // ignore eslint warning about localStorage being undefined
@@ -61,11 +60,11 @@ describe('<App />', () => {
       expect(loginView).toHaveLength(0)
     })
 
-    it('all blogs are rendered', () => {
+    it('renders all blogs', () => {
       app.update()
       expect(app.text()).toContain('kirjautuneena.')
       expect(app.html()).toContain('<h2>Blogit</h2>')
-      const blogs = app.find(Blog)
+      const blogs = app.find('tr.blogItem')
       expect(blogs).toHaveLength(blogService.blogs.length)
     })
   })
