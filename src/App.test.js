@@ -63,7 +63,7 @@ describe('<App />', () => {
 
     it('all blogs are rendered', () => {
       app.update()
-      expect(app.text()).toContain('Kirjautunut käyttäjä on')
+      expect(app.text()).toContain('kirjautuneena.')
       expect(app.html()).toContain('<h2>Blogit</h2>')
       const blogs = app.find(Blog)
       expect(blogs).toHaveLength(blogService.blogs.length)
