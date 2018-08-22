@@ -44,4 +44,18 @@ const getAll = () => {
 const setToken = (newToken) => {  // eslint-disable-line
 }
 
-export default { getAll, setToken, blogs }
+const createNew = (newBlog) => {
+  newBlog.id = Math.random()*10000000
+  blogs.concat(newBlog)
+  return Promise.resolve(newBlog)
+}
+
+const updateBlog = (id, blog) => {
+  return Promise.resolve(true)
+}
+
+const deleteBlog = (id) => {
+  return Promise.resolve(true)
+}
+
+export default { getAll, setToken, createNew, updateBlog, deleteBlog, blogs }
