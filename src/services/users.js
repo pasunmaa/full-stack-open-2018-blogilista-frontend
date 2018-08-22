@@ -17,6 +17,7 @@ const getAll = async () => {
   return (response.data)
 }
 
+/*
 const createNew = async (newBlog) => {
   const config = {
     headers: { 'Authorization': token }
@@ -38,16 +39,6 @@ const updateBlog = async (id, blog) => {
   return (response.data)
 }
 
-const deleteBlog = async (id) => {
-  const config = {
-    headers: { 'Authorization': token }
-  }
+*/
 
-  const response = await axios.delete(baseUrl+'/'+id, config)
-  /* console.log('deleted blog: ', response.data, response.status)
-  if (response.status === 401)
-    throw 401  *///('Unauthorized')
-  return (response.data)
-}
-
-export default { setToken, getAll, createNew, updateBlog, deleteBlog }
+export default { setToken, getAll }
