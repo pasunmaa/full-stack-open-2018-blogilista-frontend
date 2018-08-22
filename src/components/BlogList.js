@@ -16,7 +16,7 @@ const BlogList = (props) => {
       <table>
         <tbody>
           {blogsSortedByLikes.map(blog =>
-            <tr key={blog.id} onClick={routeToBlog(blog.id)} >
+            <tr className='blogItem' key={blog.id} onClick={routeToBlog(blog.id)} >
               <td> {blog.title} by {blog.author} </td>
               {/*  <td>
                   {this.props.showactionbutton ?
