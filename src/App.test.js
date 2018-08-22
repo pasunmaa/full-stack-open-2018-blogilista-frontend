@@ -5,7 +5,6 @@ jest.mock('./services/blogs')
 import store from './store'
 import blogService from './services/blogs'
 import Login from './components/Login'
-import Blog from './components/Blog'
 import App from './App'
 
 // ignore eslint warning about localStorage being undefined
