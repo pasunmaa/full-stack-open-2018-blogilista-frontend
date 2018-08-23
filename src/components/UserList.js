@@ -1,13 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { showNotification } from '../reducers/notificationReducer'
 import { setSelectedUser } from '../reducers/userReducer'
+import PropTypes from 'prop-types'
 
 const UserList = (props) => {
   const routeToUser = (id) => () => {
     //console.log(id, props)
     props.setSelectedUser(id)
-    props.history.history.push(`/users/${id}`)
+    props.history.push(`/users/${id}`)
   }
 
   return (
@@ -33,15 +33,18 @@ const UserList = (props) => {
   )
 }
 
+UserList.propTypes = {
+  users: PropTypes.array.isRequired,
+  history: PropTypes.object.isRequired
+}
+
 const mapStateToProps = (state) => {
-  //console.log(state)
   return {
     users: state.userdata.users,
   }
 }
 
 const mapDispatchToProps = {
-  showNotification,
   setSelectedUser
 }
 

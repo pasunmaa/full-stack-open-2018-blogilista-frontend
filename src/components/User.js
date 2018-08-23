@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { userInitialization } from '../reducers/userReducer'
+import PropTypes from 'prop-types'
 
 const User = ({ users, id, history }) => {
   if (!id) { // if id is not defined, check if there is a meaningful id on address line
@@ -22,6 +23,12 @@ const User = ({ users, id, history }) => {
   else
     return (<div></div>)
 
+}
+
+User.propTypes = {
+  users: PropTypes.array.isRequired,
+  id: PropTypes.string.isRequired,
+  history: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => {

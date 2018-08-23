@@ -21,12 +21,13 @@ describe('<SimpleBlog />', () => {
 
   it('calls likehandler twice, when button is pressed twice', () => {
     const mockHandler = jest.fn()  // mock function for likehandler
+    //console.log(typeof mockHandler)
     const blogComponent = shallow(<SimpleBlog blog={blog} onClick={mockHandler} />)
 
     const button = blogComponent.find('button')
     button.simulate('click')
     button.simulate('click')
 
-    expect(mockHandler.mock.calls.length).toBe(2)
+    expect(mockHandler.mock.calls).toHaveLength(2)
   })
 })

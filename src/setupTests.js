@@ -4,7 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 // ignore eslint warning about localStorage being undefined
 /* global localStorage:false */
 
-console.log('setup tests')
+//console.log('setup tests')
 configure({ adapter: new Adapter() })
 
 let savedItems = {}
