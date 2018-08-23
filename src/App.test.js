@@ -6,6 +6,7 @@ jest.mock('./services/users')
 jest.mock('./services/login')
 import store from './store'
 import blogService from './services/blogs'
+import TableRow from '@material-ui/core/TableRow'
 import Login from './components/Login'
 import App from './App'
 
@@ -66,8 +67,8 @@ describe('<App />', () => {
       app.update()
       expect(app.text()).toContain('kirjautuneena.')
       expect(app.html()).toContain('<h2>Blogit</h2>')
-      const blogs = app.find('tr.blogItem')
-      expect(blogs).toHaveLength(blogService.blogs.length)
+      const blogs = app.find(TableRow)
+      expect(blogs).toHaveLength(blogService.blogs.length + 1)
     })
   })
 })

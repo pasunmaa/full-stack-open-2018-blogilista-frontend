@@ -21,6 +21,16 @@ const styles = theme => ({
   },
 })
 
+const CustomTableCell = withStyles(theme => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell)
+
 const UserList = (props) => {
   const routeToUser = (id) => () => {
     //console.log(id, props)
@@ -34,15 +44,17 @@ const UserList = (props) => {
       <Table className={props.classes.table}>
         <TableHead>
           <TableRow>
-            <TableCell><strong>Nimi</strong></TableCell>
-            <TableCell><strong>Blogien määrä</strong></TableCell>
+            <CustomTableCell>Käyttäjä</CustomTableCell>
+            <CustomTableCell>Blogien määrä</CustomTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {props.users.sort((a, b) => b.blogs.length - a.blogs.length).map(user =>
-            <TableRow key={user._id} onClick={routeToUser(user._id)} >
-              <TableCell> {user.name} </TableCell>
-              <TableCell> {user.blogs.length} </TableCell>
+            <TableRow
+              className={props.classes.row} hover={true}
+              key={user._id} onClick={routeToUser(user._id)} >
+              <CustomTableCell component="th" scope="row"> {user.name} </CustomTableCell>
+              <CustomTableCell> {user.blogs.length} </CustomTableCell>
             </TableRow>
           )}
         </TableBody>

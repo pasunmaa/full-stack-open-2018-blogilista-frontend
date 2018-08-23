@@ -19,6 +19,16 @@ const styles = theme => ({
   },
 })
 
+const CustomTableCell = withStyles(theme => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell)
+
 const BlogList = (props) => {
   const routeToBlog = (id) => () => {
     props.setselectedblog(id)
@@ -29,18 +39,22 @@ const BlogList = (props) => {
   return (
     <Paper className={props.classes.root}>
       <h2>Blogit</h2>
-      <Table className={props.classes.root}>
+      <Table className={props.classes.table}>
         <TableHead>
           <TableRow>
-            <TableCell><strong>Nimi</strong></TableCell>
-            <TableCell><strong>Kirjoittaja</strong></TableCell>
+            <CustomTableCell>Blogi</CustomTableCell>
+            <CustomTableCell>Kirjoittaja</CustomTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {blogsSortedByLikes.map(blog =>
-            <TableRow className='blogItem' key={blog.id} onClick={routeToBlog(blog.id)} >
-              <TableCell> {blog.title} </TableCell>
-              <TableCell> {blog.author} </TableCell>
+            <TableRow
+              className={props.classes.row}
+              hover={true}
+              key={blog.id}
+              onClick={routeToBlog(blog.id)} >
+              <CustomTableCell component="th" scope="row"> {blog.title} </CustomTableCell>
+              <CustomTableCell> {blog.author} </CustomTableCell>
             </TableRow>
           )}
         </TableBody>
