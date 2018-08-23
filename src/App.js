@@ -10,7 +10,6 @@ import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
-//import TogglableLine from './components/TogglableLine'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import UserList from './components/UserList'
@@ -217,7 +216,7 @@ class App extends React.Component {
                   history={ history } />} />
             <Route
               exact path="/users"
-              render={({ history }) => <UserList history={{ history }} />} />
+              render={({ history }) => <UserList history={ history } />} />
             <Route
               path={`/users/:${this.props.selecteduserid}`}
               render={({ history }) =>
