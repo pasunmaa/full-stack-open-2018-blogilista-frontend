@@ -182,7 +182,6 @@ class App extends React.Component {
               render={({ history }) =>
                 <div>
                   <div>
-                    <h2>Blogit</h2>
                     <BlogList
                       history={ history }
                       blogs={this.state.blogs}

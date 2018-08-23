@@ -2,6 +2,24 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { setSelectedUser } from '../reducers/userReducer'
 import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
+import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody'
+import TableCell from '@material-ui/core/TableCell'
+import TableHead from '@material-ui/core/TableHead'
+import TableRow from '@material-ui/core/TableRow'
+import Paper from '@material-ui/core/Paper'
+
+const styles = theme => ({
+  root: {
+    width: '100%',
+    marginTop: theme.spacing.unit * 3,
+    overflowX: 'auto',
+  },
+  table: {
+    minWidth: 300,
+  },
+})
 
 const UserList = (props) => {
   const routeToUser = (id) => () => {
@@ -11,31 +29,32 @@ const UserList = (props) => {
   }
 
   return (
-    <div>
-      <h2>Users</h2>
-      <table>
-        <thead>
-          <tr>
-            <td><strong>name</strong></td>
-            <td><strong>blogs added</strong></td>
-          </tr>
-        </thead>
-        <tbody>
+    <Paper className={props.classes.root}>
+      <h2>Käyttäjät</h2>
+      <Table className={props.classes.table}>
+        <TableHead>
+          <TableRow>
+            <TableCell><strong>Nimi</strong></TableCell>
+            <TableCell><strong>Blogien määrä</strong></TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
           {props.users.sort((a, b) => b.blogs.length - a.blogs.length).map(user =>
-            <tr key={user._id} onClick={routeToUser(user._id)} >
-              <td> {user.name} </td>
-              <td> {user.blogs.length} </td>
-            </tr>
+            <TableRow key={user._id} onClick={routeToUser(user._id)} >
+              <TableCell> {user.name} </TableCell>
+              <TableCell> {user.blogs.length} </TableCell>
+            </TableRow>
           )}
-        </tbody>
-      </table>
-    </div>
+        </TableBody>
+      </Table>
+    </Paper>
   )
 }
 
 UserList.propTypes = {
   users: PropTypes.array.isRequired,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = (state) => {
@@ -51,4 +70,6 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(UserList)
+)(withStyles(styles)(UserList))
+
+//export default withStyles(styles)(UserList)

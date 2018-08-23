@@ -1,4 +1,5 @@
 import React from 'react'
+import Button from '@material-ui/core/Button'
 import PropTypes from 'prop-types'
 
 const BlogForm = ({ onSubmit, onChange, title, author, url }) => {
@@ -13,7 +14,7 @@ const BlogForm = ({ onSubmit, onChange, title, author, url }) => {
         <br></br>
         url <input name="url" value={url} onChange={onChange} />
         <br></br>
-        <button type="submit">luo</button>
+        <Button variant="contained" color="primary" type="submit">luo</Button>
       </form>
     </div>
   )
