@@ -2,6 +2,8 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import { mount } from 'enzyme'
 jest.mock('./services/blogs')
+jest.mock('./services/users')
+jest.mock('./services/login')
 import store from './store'
 import blogService from './services/blogs'
 import Login from './components/Login'

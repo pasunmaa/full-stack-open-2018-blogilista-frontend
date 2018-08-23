@@ -49,9 +49,9 @@ class Blog extends React.Component {
           {blog.likes} tykkäystä &nbsp;
           <button onClick={this.props.likeIncrease}>tykkää</button>
         </div>
-        <div style={lineStyle}>lisätty by {blog.user ? blog.user.name : 'EI TIEDOSSA'}
+        <div style={lineStyle}>lisännyt {blog.user ? blog.user.name : 'EI TIEDOSSA'}
           &nbsp;
-          {(blog.user !== undefined && blog.user.username === this.props.currentUser) ?
+          {(blog.user === undefined || blog.user.username === this.props.currentUser) ?
             <button onClick={this.deleteBackToBlogs}>poista</button> : <span></span>
           }
         </div>
@@ -61,7 +61,7 @@ class Blog extends React.Component {
 }
 
 Blog.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string,
   blogs: PropTypes.array.isRequired,
   blogInitialization: PropTypes.func.isRequired,
   likeIncrease: PropTypes.func.isRequired,
