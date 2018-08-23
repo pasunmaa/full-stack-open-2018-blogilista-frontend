@@ -51,10 +51,12 @@ const createNew = (newBlog) => {
 }
 
 const updateBlog = (id, blog) => {
+  console.log('updateBlog', id, blog)
   return Promise.resolve(true)
 }
 
 const deleteBlog = (id) => {
+  console.log('deleteBlog', id)
   return Promise.resolve(true)
 }
 

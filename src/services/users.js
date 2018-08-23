@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const baseUrl = '/api/users'
-let token = null
+/* let token = null
 
 const setToken = (newToken) => {
   if (newToken)
@@ -9,7 +9,7 @@ const setToken = (newToken) => {
   else
     token = null
   //console.log('uusi token asetettu: ', token)
-}
+} */
 
 const getAll = async () => {
   const response = await axios.get(baseUrl)
@@ -41,4 +41,4 @@ const updateBlog = async (id, blog) => {
 
 */
 
-export default { setToken, getAll }
+export default { getAll }
