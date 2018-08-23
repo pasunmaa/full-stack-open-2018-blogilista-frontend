@@ -61,10 +61,13 @@ class Blog extends React.Component {
 }
 
 Blog.propTypes = {
-  id: PropTypes.string,
+  id: PropTypes.string.isRequired,
+  blogs: PropTypes.array.isRequired,
+  blogInitialization: PropTypes.func.isRequired,
   likeIncrease: PropTypes.func.isRequired,
   deleteBlog: PropTypes.func.isRequired,
-  currentUser: PropTypes.string.isRequired
+  currentUser: PropTypes.string.isRequired,
+  history: PropTypes.object.isRequired,
 }
 
 export default Blog

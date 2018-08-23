@@ -212,6 +212,8 @@ class App extends React.Component {
                   blogs={this.state.blogs}
                   blogInitialization={this.blogInitialization}
                   likeIncrease={this.updateBlog(this.state.selectedblogid)}
+                  currentUser={this.state.user.username}
+                  deleteBlog={this.deleteBlog(this.state.selectedblogid)}
                   history={ history } />} />
             <Route
               exact path="/users"
