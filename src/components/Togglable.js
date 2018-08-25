@@ -1,5 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Button from '@material-ui/core/Button'
+import { withStyles } from '@material-ui/core/styles'
+
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+  },
+})
 
 class Togglable extends React.Component {
   constructor(props) {
@@ -10,7 +18,7 @@ class Togglable extends React.Component {
   }
 
   toggleVisibility = () => {
-    this.setState({visible: !this.state.visible})
+    this.setState({ visible: !this.state.visible })
   }
 
   render() {
@@ -20,11 +28,23 @@ class Togglable extends React.Component {
     return (
       <div>
         <div style={hideWhenVisible}>
-          <button onClick={this.toggleVisibility}>{this.props.buttonLabel}</button>
+          <Button
+            className={this.props.classes.button}
+            variant="contained" color="primary"
+            onClick={this.toggleVisibility} >
+            {this.props.buttonLabel}
+          </Button>
+          {/* <button onClick={this.toggleVisibility}>{this.props.buttonLabel}</button> */}
         </div>
         <div style={showWhenVisible}>
           {this.props.children}
-          <button onClick={this.toggleVisibility}>peruuta</button>
+          <Button
+            className={this.props.classes.button}
+            variant="outlined" color="default"
+            onClick={this.toggleVisibility} >
+            peru
+          </Button>
+          {/* <button onClick={this.toggleVisibility}>peruuta</button> */}
         </div>
       </div>
     )
@@ -32,7 +52,9 @@ class Togglable extends React.Component {
 }
 
 Togglable.propTypes = {
-  buttonLabel: PropTypes.string.isRequired
+  buttonLabel: PropTypes.string.isRequired,
+  classes: PropTypes.object.isRequired,
 }
 
-export default Togglable
+export default withStyles(styles)(Togglable)
+//export default Togglable
