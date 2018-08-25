@@ -90,7 +90,7 @@ class App extends React.Component {
       this.setState({
         blogs: this.state.blogs.concat(newBlog),
         title: '', author: '', url: '' })
-      delete newBlog.user // property is not needed by userBlogAdd
+      //delete newBlog.user // property is not needed by userBlogAdd
       this.props.userBlogAdd(userId, newBlog)
       this.blogForm.toggleVisibility()
       this.props.showNotification(`Lisättiin uusi blogi: ${newBlog.title}`, 5)
@@ -189,7 +189,7 @@ class App extends React.Component {
                   </div>
                   <div>
                     <br></br>
-                    <Togglable buttonLabel="Lisää blogi" ref={component => this.blogForm = component}>
+                    <Togglable buttonLabel="Lisää blogi" innerRef={component => this.blogForm = component}>
                       <BlogForm
                         onSubmit={this.createNew}
                         onChange={this.handleFieldChange}
