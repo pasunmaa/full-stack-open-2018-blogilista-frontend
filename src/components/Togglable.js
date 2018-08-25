@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Button from '@material-ui/core/Button'
-import { withStyles } from '@material-ui/core/styles'
+/* import { withStyles } from '@material-ui/core/styles'
 
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
   },
-})
+}) */
 
 class Togglable extends React.Component {
   constructor(props) {
@@ -29,7 +29,7 @@ class Togglable extends React.Component {
       <div>
         <div style={hideWhenVisible}>
           <Button
-            className={this.props.classes.button}
+            /* className={this.props.classes.button} */
             variant="contained" color="primary"
             onClick={this.toggleVisibility} >
             {this.props.buttonLabel}
@@ -39,7 +39,7 @@ class Togglable extends React.Component {
         <div style={showWhenVisible}>
           {this.props.children}
           <Button
-            className={this.props.classes.button}
+            /* className={this.props.classes.button} */
             variant="outlined" color="default"
             onClick={this.toggleVisibility} >
             peru
@@ -56,5 +56,5 @@ Togglable.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(Togglable)
-//export default Togglable
+//export default withStyles(styles)(Togglable)
+export default Togglable

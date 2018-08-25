@@ -197,6 +197,7 @@ class App extends React.Component {
                         author={this.state.author}
                         url={this.state.url} />
                     </Togglable>
+                    {console.log(Togglable)}
                     <br></br>
                   </div>
                 </div>
