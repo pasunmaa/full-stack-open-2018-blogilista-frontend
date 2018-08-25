@@ -65,7 +65,7 @@ describe('<App />', () => {
 
     it('renders all blogs', () => {
       app.update()
-      expect(app.text()).toContain('kirjautuneena.')
+      expect(app.text()).toContain('kirjautuneena')
       expect(app.html()).toContain('<h2>Blogit</h2>')
       const blogs = app.find(TableRow)
       expect(blogs).toHaveLength(blogService.blogs.length + 1)
