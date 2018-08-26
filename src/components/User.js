@@ -27,7 +27,7 @@ const User = ({ users, id, history }) => {
 
 User.propTypes = {
   users: PropTypes.array.isRequired,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string,
   history: PropTypes.object.isRequired
 }
 

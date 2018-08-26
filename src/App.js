@@ -207,16 +207,17 @@ class App extends React.Component {
                 }
               />
               <Route
-                path={`/blogs/:${this.state.selectedblogid}`}
-                render={({ history }) =>
-                  <Blog className="bloglong"
-                    id={this.state.selectedblogid}
-                    blogs={this.state.blogs}
-                    blogInitialization={this.blogInitialization}
-                    likeIncrease={this.updateBlog(this.state.selectedblogid)}
-                    currentUser={this.state.user.username}
-                    deleteBlog={this.deleteBlog(this.state.selectedblogid)}
-                    history={ history } />} />
+                path={'/blogs/:id'}
+                render={({ match, history }) => {
+                  return (
+                    <Blog className="bloglong"
+                      blog={this.state.blogs.find(b => b.id === match.params.id)}
+                      likeIncrease={this.updateBlog(match.params.id)}
+                      currentUser={this.state.user.username}
+                      deleteBlog={this.deleteBlog(match.params.id)}
+                      history={ history } />
+                  )}
+                } />
               <Route
                 exact path="/users"
                 render={({ history }) => <UserList history={ history } />} />

@@ -22,24 +22,13 @@ const lineStyle = {
 }
 
 class Blog extends React.Component {
-  id = ''
-  async componentDidMount() {
-    //await this.props.blogInitialization()
-    //console.log('componentDidMount')
-  }
-
   deleteBackToBlogs = () => {
-    this.props.deleteBlog(this.id)
+    this.props.deleteBlog(this.props.blog.id)
     this.props.history.push('/')
   }
 
   render() {
-    if (!this.props.id) { // if blog is not defined, check if there is a meaningful id on address line
-      this.id = this.props.history.location.pathname.replace('/blogs/', '')
-    }
-    else
-      this.id = this.props.id
-    const blog = this.props.blogs.find(blog => blog.id === this.id)
+    const blog = this.props.blog
     if (!blog) return (null) // if blog fetching from server is not completed do not render anything
     return (
       <div style={blogStyle} key={blog.id}>
@@ -61,13 +50,11 @@ class Blog extends React.Component {
 }
 
 Blog.propTypes = {
-  id: PropTypes.string,
-  blogs: PropTypes.array.isRequired,
-  blogInitialization: PropTypes.func.isRequired,
+  blog: PropTypes.object,
   likeIncrease: PropTypes.func.isRequired,
   deleteBlog: PropTypes.func.isRequired,
   currentUser: PropTypes.string.isRequired,
-  history: PropTypes.object.isRequired,
+  history: PropTypes.object,
 }
 
 export default Blog
