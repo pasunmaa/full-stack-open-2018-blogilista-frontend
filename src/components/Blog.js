@@ -23,7 +23,7 @@ const lineStyle = {
 
 class Blog extends React.Component {
   deleteBackToBlogs = () => {
-    this.props.deleteBlog(this.props.blog.id)
+    this.props.deleteBlog(this.props.blog._id)
     this.props.history.push('/')
   }
 
@@ -31,7 +31,7 @@ class Blog extends React.Component {
     const blog = this.props.blog
     if (!blog) return (null) // if blog fetching from server is not completed do not render anything
     return (
-      <div style={blogStyle} key={blog.id}>
+      <div style={blogStyle} key={blog._id}>
         <div>{blog.title} <strong>by</strong> {blog.author}</div>
         <div style={urlStyle}><a href={blog.url}>{blog.url}</a></div>
         <div style={lineStyle}>

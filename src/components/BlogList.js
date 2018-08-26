@@ -50,8 +50,8 @@ const BlogList = (props) => {
             <TableRow
               className={props.classes.row}
               hover={true}
-              key={blog.id}
-              onClick={routeToBlog(blog.id)} >
+              key={blog._id}
+              onClick={routeToBlog(blog._id)} >
               <CustomTableCell component="th" scope="row"> {blog.title} </CustomTableCell>
               <CustomTableCell> {blog.author} </CustomTableCell>
             </TableRow>

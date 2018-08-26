@@ -105,10 +105,10 @@ class App extends React.Component {
   updateBlog = (blogID) => {
     return async () => {
       //console.log('udpating blog id', blogID)
-      const iBlog = this.state.blogs.findIndex(blog => blog.id === blogID)
+      const iBlog = this.state.blogs.findIndex(blog => blog._id === blogID)
       const user = { ...this.state.blogs[iBlog].user }
       const blogToBeUpdated = {
-        id: blogID,
+        _id: blogID,
         title: this.state.blogs[iBlog].title,
         author: this.state.blogs[iBlog].author,
         url: this.state.blogs[iBlog].url,
@@ -116,7 +116,7 @@ class App extends React.Component {
         likes: this.state.blogs[iBlog].likes + 1,
       }
       try{
-        const aBlog = await blogService.updateBlog(this.state.blogs[iBlog].id, blogToBeUpdated)
+        const aBlog = await blogService.updateBlog(this.state.blogs[iBlog]._id, blogToBeUpdated)
         this.setState({
           blogs: this.state.blogs.map((blog, i) => i === iBlog ? blogToBeUpdated : blog),
         })
@@ -130,11 +130,11 @@ class App extends React.Component {
 
   deleteBlog = (blogID) => {
     return async () => {
-      const iBlog = this.state.blogs.findIndex(blog => blog.id === blogID)
+      const iBlog = this.state.blogs.findIndex(blog => blog._id === blogID)
       //console.log('deleting blog', blogID, this.state.blogs[iBlog].title)
       if (window.confirm('Haluatko varmasti poistaa blogin ', this.state.blogs[iBlog].title)) {
         try{
-          await blogService.deleteBlog(this.state.blogs[iBlog].id)
+          await blogService.deleteBlog(this.state.blogs[iBlog]._id)
           this.props.showNotification(`Poistettiin blogi: ${this.state.blogs[iBlog].title}`, 5)
           this.props.userBlogRemove(this.state.blogs[iBlog].user._id, blogID)
           this.setState({ blogs: this.state.blogs.filter((blog, i) => i !== iBlog) })
@@ -204,7 +204,7 @@ class App extends React.Component {
                 render={({ match, history }) => {
                   return (
                     <Blog className="bloglong"
-                      blog={this.state.blogs.find(b => b.id === match.params.id)}
+                      blog={this.state.blogs.find(b => b._id === match.params.id)}
                       likeIncrease={this.updateBlog(match.params.id)}
                       currentUser={this.state.user.username}
                       deleteBlog={this.deleteBlog(match.params.id)}
