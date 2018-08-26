@@ -37,18 +37,7 @@ const usersAtStart = [
 ]
 
 const initialState = {
-  selecteduserid: null,
   users: usersAtStart
-}
-
-export const setSelectedUser = (id) => {
-  //console.log(id)
-  return (dispatch) => {
-    dispatch({
-      type: 'SELECT_USER',
-      data: id
-    })
-  }
 }
 
 export const userBlogRemove = (userId, blogId) => {
@@ -89,12 +78,8 @@ const removeBlogFromUser = (user, blogId) => {
 
 const reducer = (store = initialState, action) => {
   switch (action.type) {
-  case 'SELECT_USER': // sets an active selected user
-    //console.log(action)
-    return { selecteduserid: action.data, users: [...store.users] }
   case 'REMOVE_USER_BLOG':
     return {
-      selecteduserid: store.selecteduserid,
       users: store.users.map(user =>
         user._id !== action.data.userId ?
           user :
@@ -103,7 +88,6 @@ const reducer = (store = initialState, action) => {
     }
   case 'ADD_USER_BLOG': {
     return  {
-      selecteduserid: store.selecteduserid,
       users: store.users.map(user =>
         user._id !== action.data.userId ?
           user :
@@ -112,7 +96,7 @@ const reducer = (store = initialState, action) => {
     }
   }
   case 'INIT_USERS':
-    return { selecteduserid: store.selecteduserid, users: [ ...action.data ] }
+    return { users: [ ...action.data ] }
   default:
     return store
   }

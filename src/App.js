@@ -21,7 +21,6 @@ class App extends React.Component {
     super(props)
     this.state = {
       blogs: [],
-      selectedblogid: null,
       username: '',
       password: '',
       user: null,
@@ -147,11 +146,6 @@ class App extends React.Component {
     }
   }
 
-  setSelectedBlog = (id) => {
-    //console.log(id)
-    this.setState({ selectedblogid: id })
-  }
-
   handleFieldChange = (event) => {
     this.setState({ [event.target.name]: event.target.value })
   }
@@ -188,8 +182,7 @@ class App extends React.Component {
                     <div>
                       <BlogList
                         history={ history }
-                        blogs={this.state.blogs}
-                        setselectedblog={this.setSelectedBlog} />
+                        blogs={this.state.blogs} />
                     </div>
                     <div>
                       <br></br>
@@ -207,25 +200,26 @@ class App extends React.Component {
                 }
               />
               <Route
-                path={`/blogs/:${this.state.selectedblogid}`}
-                render={({ history }) =>
-                  <Blog className="bloglong"
-                    id={this.state.selectedblogid}
-                    blogs={this.state.blogs}
-                    blogInitialization={this.blogInitialization}
-                    likeIncrease={this.updateBlog(this.state.selectedblogid)}
-                    currentUser={this.state.user.username}
-                    deleteBlog={this.deleteBlog(this.state.selectedblogid)}
-                    history={ history } />} />
+                path={'/blogs/:id'}
+                render={({ match, history }) => {
+                  return (
+                    <Blog className="bloglong"
+                      blog={this.state.blogs.find(b => b.id === match.params.id)}
+                      likeIncrease={this.updateBlog(match.params.id)}
+                      currentUser={this.state.user.username}
+                      deleteBlog={this.deleteBlog(match.params.id)}
+                      history={ history } />
+                  )}
+                } />
               <Route
                 exact path="/users"
                 render={({ history }) => <UserList history={ history } />} />
               <Route
-                path={`/users/:${this.props.selecteduserid}`}
-                render={({ history }) =>
+                path={'/users/:id'}
+                render={({ match }) =>
                   <User
-                    id={this.props.selecteduserid}
-                    history={ history } />} />
+                    user={this.props.users.find(u => u._id === match.params.id)}
+                  />} />
               <Redirect from="/*" to="/" />
             </Switch>
           </div>
@@ -239,7 +233,6 @@ class App extends React.Component {
 const mapStateToProps = (state) => {
   //console.log(state)
   return {
-    selecteduserid: state.userdata.selecteduserid,
     users: state.userdata.users
   }
 }
