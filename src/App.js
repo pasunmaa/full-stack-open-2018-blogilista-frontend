@@ -215,11 +215,11 @@ class App extends React.Component {
                 exact path="/users"
                 render={({ history }) => <UserList history={ history } />} />
               <Route
-                path={`/users/:${this.props.selecteduserid}`}
-                render={({ history }) =>
+                path={'/users/:id'}
+                render={({ match }) =>
                   <User
-                    id={this.props.selecteduserid}
-                    history={ history } />} />
+                    user={this.props.users.find(u => u._id === match.params.id)}
+                  />} />
               <Redirect from="/*" to="/" />
             </Switch>
           </div>
@@ -233,7 +233,6 @@ class App extends React.Component {
 const mapStateToProps = (state) => {
   //console.log(state)
   return {
-    selecteduserid: state.userdata.selecteduserid,
     users: state.userdata.users
   }
 }
