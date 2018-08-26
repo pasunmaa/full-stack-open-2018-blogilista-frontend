@@ -24,7 +24,7 @@ const lineStyle = {
 class Blog extends React.Component {
   id = ''
   async componentDidMount() {
-    await this.props.blogInitialization()
+    //await this.props.blogInitialization()
     //console.log('componentDidMount')
   }
 

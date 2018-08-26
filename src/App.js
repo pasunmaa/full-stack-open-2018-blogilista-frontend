@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import { showNotification } from './reducers/notificationReducer'
 import { userInitialization, userBlogAdd, userBlogRemove } from './reducers/userReducer'
 
@@ -44,10 +44,13 @@ class App extends React.Component {
     }
   }
 
-  blogInitialization = async () => {
+  blogInitialization = () => {
     blogService.getAll().then(blogs =>
       this.setState({ blogs })
-    )
+    ).catch(error => {
+      console.log(`initializing blogs failed ${error}`)
+      this.props.showNotification(`yhteys palvelimeen epäonnistui. Yritä myöhemmin uudestaan: ${error}`, 7, 'error')
+    })
   }
 
   login = async (event) => {
@@ -177,51 +180,54 @@ class App extends React.Component {
         <Router>
           <div>
             <Navi name={this.state.user.name} logout={this.logout}/>
-            <Route
-              exact path="/"
-              render={({ history }) =>
-                <div>
+            <Switch>
+              <Route
+                exact path="/"
+                render={({ history }) =>
                   <div>
-                    <BlogList
-                      history={ history }
-                      blogs={this.state.blogs}
-                      setselectedblog={this.setSelectedBlog} />
+                    <div>
+                      <BlogList
+                        history={ history }
+                        blogs={this.state.blogs}
+                        setselectedblog={this.setSelectedBlog} />
+                    </div>
+                    <div>
+                      <br></br>
+                      <Togglable buttonLabel="Lisää blogi" innerRef={component => this.blogForm = component}>
+                        <BlogForm
+                          onSubmit={this.createNew}
+                          onChange={this.handleFieldChange}
+                          title={this.state.title}
+                          author={this.state.author}
+                          url={this.state.url} />
+                      </Togglable>
+                      <br></br>
+                    </div>
                   </div>
-                  <div>
-                    <br></br>
-                    <Togglable buttonLabel="Lisää blogi" innerRef={component => this.blogForm = component}>
-                      <BlogForm
-                        onSubmit={this.createNew}
-                        onChange={this.handleFieldChange}
-                        title={this.state.title}
-                        author={this.state.author}
-                        url={this.state.url} />
-                    </Togglable>
-                    <br></br>
-                  </div>
-                </div>
-              }
-            />
-            <Route
-              path={`/blogs/:${this.state.selectedblogid}`}
-              render={({ history }) =>
-                <Blog className="bloglong"
-                  id={this.state.selectedblogid}
-                  blogs={this.state.blogs}
-                  blogInitialization={this.blogInitialization}
-                  likeIncrease={this.updateBlog(this.state.selectedblogid)}
-                  currentUser={this.state.user.username}
-                  deleteBlog={this.deleteBlog(this.state.selectedblogid)}
-                  history={ history } />} />
-            <Route
-              exact path="/users"
-              render={({ history }) => <UserList history={ history } />} />
-            <Route
-              path={`/users/:${this.props.selecteduserid}`}
-              render={({ history }) =>
-                <User
-                  id={this.props.selecteduserid}
-                  history={ history } />} />
+                }
+              />
+              <Route
+                path={`/blogs/:${this.state.selectedblogid}`}
+                render={({ history }) =>
+                  <Blog className="bloglong"
+                    id={this.state.selectedblogid}
+                    blogs={this.state.blogs}
+                    blogInitialization={this.blogInitialization}
+                    likeIncrease={this.updateBlog(this.state.selectedblogid)}
+                    currentUser={this.state.user.username}
+                    deleteBlog={this.deleteBlog(this.state.selectedblogid)}
+                    history={ history } />} />
+              <Route
+                exact path="/users"
+                render={({ history }) => <UserList history={ history } />} />
+              <Route
+                path={`/users/:${this.props.selecteduserid}`}
+                render={({ history }) =>
+                  <User
+                    id={this.props.selecteduserid}
+                    history={ history } />} />
+              <Redirect from="/*" to="/" />
+            </Switch>
           </div>
         </Router>
         <Notification />
