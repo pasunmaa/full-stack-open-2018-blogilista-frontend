@@ -21,7 +21,6 @@ class App extends React.Component {
     super(props)
     this.state = {
       blogs: [],
-      selectedblogid: null,
       username: '',
       password: '',
       user: null,
@@ -147,11 +146,6 @@ class App extends React.Component {
     }
   }
 
-  setSelectedBlog = (id) => {
-    //console.log(id)
-    this.setState({ selectedblogid: id })
-  }
-
   handleFieldChange = (event) => {
     this.setState({ [event.target.name]: event.target.value })
   }
@@ -188,8 +182,7 @@ class App extends React.Component {
                     <div>
                       <BlogList
                         history={ history }
-                        blogs={this.state.blogs}
-                        setselectedblog={this.setSelectedBlog} />
+                        blogs={this.state.blogs} />
                     </div>
                     <div>
                       <br></br>

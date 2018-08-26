@@ -31,7 +31,6 @@ const CustomTableCell = withStyles(theme => ({
 
 const BlogList = (props) => {
   const routeToBlog = (id) => () => {
-    props.setselectedblog(id)
     props.history.push(`/blogs/${id}`)
   }
 
@@ -66,7 +65,6 @@ const BlogList = (props) => {
 BlogList.propTypes = {
   history: PropTypes.object.isRequired,
   blogs: PropTypes.array.isRequired,
-  setselectedblog: PropTypes.func.isRequired,
 }
 
 export default withStyles(styles)(BlogList)
