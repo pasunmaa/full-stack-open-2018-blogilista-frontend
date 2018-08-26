@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { setSelectedUser } from '../reducers/userReducer'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
@@ -33,8 +32,6 @@ const CustomTableCell = withStyles(theme => ({
 
 const UserList = (props) => {
   const routeToUser = (id) => () => {
-    //console.log(id, props)
-    props.setSelectedUser(id)
     props.history.push(`/users/${id}`)
   }
 
@@ -75,13 +72,9 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = {
-  setSelectedUser
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(withStyles(styles)(UserList))
 
 //export default withStyles(styles)(UserList)
