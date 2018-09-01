@@ -1,0 +1,36 @@
+language: node_js
+node_js:
+  - "node"
+cache:
+  directories:
+    - "node_modules" # This will tell Travis CI to cache the dependencies
+# whitelist
+branches:
+  only:
+    - master
+    - development
+jobs:
+  include:
+    - stage: Run tests
+      name: "Run front-end unit tests"
+      script: npm test
+    - stage: Build
+      name: "Build front-end"
+      #install: 
+      #- npm install now --no-save # Install Now CLI on Travis
+      script: npm run build
+    - stage: Deploy front
+      name: "Push front-end statics to back-end rep"
+      
+        deploy:
+        - provider: script # Run a custom deployment script which we will define below
+          script: now --public --token $NOW_TOKEN && now alias --token $NOW_TOKEN
+          skip_cleanup: true
+          on:
+            all_branches: true
+            master: false
+        - provider: script
+          script: now --public --token $NOW_TOKEN && now alias --token $NOW_TOKEN
+          skip_cleanup: true
+          on:
+            master: true
