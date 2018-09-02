@@ -21,11 +21,7 @@
       "build",
       "rules.json",
       "package.json"
-    ],
-    "env": {
-      "PORT": "3003",
-      "TEST_PORT": "0"
-    }
+    ]
   },
   "dependencies": {
     "@material-ui/core": "^1.5.1",
