@@ -1,7 +1,28 @@
 {
-  "name": "bloglist",
-  "version": "0.1.0",
+  "name": "blogilista-ui",
+  "version": "1.0.1",
+  "description": "Helsinki Open University excercise Blogilista Frontend",
+  "main": "index.js",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pasunmaa/full-stack-open-2018-blogilista-frontend"
+  },
+  "keywords": [
+    "blogilista",
+    "frontend"
+  ],
+  "author": "Petri Asunmaa",
+  "license": "ISC",
+  "now": {
+    "alias": "ui-blogilista-dev",
+    "env": {
+      "SECRET": "@secret",
+      "PORT": "3003",
+      "TEST_PORT": "0",
+      "NODE_ENV": "development"
+    }
+  },
   "dependencies": {
     "@material-ui/core": "^1.5.1",
     "@material-ui/icons": "^1.1.1",
