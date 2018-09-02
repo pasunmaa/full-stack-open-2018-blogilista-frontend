@@ -9,27 +9,19 @@ branches:
   only:
     - master
     - development
-    - travis
     - static
 jobs:
   include:
-    #- stage: Run tests
-    #  name: "Run front-end unit tests"
-    #  script: npm test
-    #- stage: Build
-    #  name: "Build front-end"
-    #  script: npm run build
-      #script: echo "npm run build run here"
+    - stage: Run tests
+      name: "Run front-end unit tests"
+      script: npm test
     - stage: Deploy to now
       name: "Deploy UI-server to Zeit now"
-      #install: 
-      #- npm install serve -g
       script: skip
       before_deploy: npm install now serve --no-save # Install Now CLI on Travis
       deploy:
         - provider: script # Run a custom deployment script which we will define below
           script: now --public --token $NOW_TOKEN && now alias --token $NOW_TOKEN
-          #script: echo "now deployment should run here"
           skip_cleanup: true
           on:
             all_branches: true
@@ -41,7 +33,4 @@ jobs:
             master: true
       after_deploy:
         # Remove old deployments and apply API gw rules
-        now alias blogilista10.now.sh -r rules.json --token $NOW_TOKEN && now rm blogilista-ui --token $NOW_TOKEN --safe --yes --public
-    #- stage: Cleanup
-    #  name: "Remove old deployments from Zeit now"
-    #  script: now rm blogilista-ui --token $NOW_TOKEN --safe --yes --public
+        now alias blogilista10.now.sh -r rules.json --token $NOW_TOKEN && now rm blogilista-ui --token $NOW_TOKEN --safe --yes
