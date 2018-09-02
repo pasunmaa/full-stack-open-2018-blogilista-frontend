@@ -16,11 +16,11 @@ jobs:
     - stage: Run tests
       name: "Run front-end unit tests"
       script: npm test
-    #- stage: Build
-    #  name: "Build front-end"
+    - stage: Build
+      name: "Build front-end"
       #install: 
       #- npm install
-    #  script: npm run build
+      script: npm run build
     - stage: Deploy to now
       name: "Deploy UI-server to Zeit now"
       script: skip
