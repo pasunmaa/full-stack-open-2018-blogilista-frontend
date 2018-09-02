@@ -21,10 +21,7 @@
       "build",
       "rules.json",
       "package.json"
-    ],
-    "scripts": {
-      "now-build": "echo 'Built on Travis CI'"
-    }
+    ]
   },
   "dependencies": {
     "@material-ui/core": "^1.5.1",
