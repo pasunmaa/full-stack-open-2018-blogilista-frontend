@@ -10,20 +10,21 @@ branches:
     - master
     - development
     - travis
+    - static
 jobs:
   include:
     - stage: Run tests
       name: "Run front-end unit tests"
       script: npm test
-    - stage: Build
-      name: "Build front-end"
+    #- stage: Build
+    #  name: "Build front-end"
       #install: 
       #- npm install
-      script: npm run build
+    #  script: npm run build
     - stage: Deploy to now
       name: "Deploy UI-server to Zeit now"
       script: skip
-      before_deploy: npm install now --no-save # Install Now CLI on Travis
+      before_deploy: npm install now # --no-save # Install Now CLI on Travis
       deploy:
         - provider: script # Run a custom deployment script which we will define below
           script: now --public --token $NOW_TOKEN && now alias --token $NOW_TOKEN
@@ -38,4 +39,7 @@ jobs:
             master: true
       after_deploy:
         now alias blogilista10.now.sh -r rules.json --token $NOW_TOKEN
-        now rm blogilista-ui --token $NOW_TOKEN --safe --yes --public
+    - stage: Cleanup
+      name: "Remove old deployments from Zeit now"
+      script: now rm blogilista-ui --token $NOW_TOKEN --safe --yes --public
+    
