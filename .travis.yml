@@ -24,7 +24,7 @@ jobs:
     - stage: Deploy to now
       name: "Deploy UI-server to Zeit now"
       script: skip
-      before_deploy: npm install now # --no-save # Install Now CLI on Travis
+      before_deploy: npm install now --no-save # Install Now CLI on Travis
       deploy:
         - provider: script # Run a custom deployment script which we will define below
           script: now --public --token $NOW_TOKEN && now alias --token $NOW_TOKEN
