@@ -16,9 +16,9 @@ jobs:
     #- stage: Run tests
     #  name: "Run front-end unit tests"
     #  script: npm test
-    - stage: Build
-      name: "Build front-end"
-      script: npm run build
+    #- stage: Build
+    #  name: "Build front-end"
+    #  script: npm run build
       #script: echo "npm run build run here"
     - stage: Deploy to now
       name: "Deploy UI-server to Zeit now"
@@ -40,6 +40,7 @@ jobs:
           on:
             master: true
       after_deploy:
+        # Remove old deployments and apply API gw rules
         now alias blogilista10.now.sh -r rules.json --token $NOW_TOKEN && now rm blogilista-ui --token $NOW_TOKEN --safe --yes --public
     #- stage: Cleanup
     #  name: "Remove old deployments from Zeit now"

@@ -46,7 +46,6 @@
   "scripts": {
     "now-start": "cross-env NODE_ENV=production serve -s build",
     "start": "react-scripts start",
-    "now-build": "echo 'Built on Travis CI'",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
