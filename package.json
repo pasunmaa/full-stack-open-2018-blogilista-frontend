@@ -17,6 +17,11 @@
   "license": "ISC",
   "now": {
     "alias": "ui-blogilista-dev",
+    "files": [
+      "build",
+      "rules.json",
+      "package.json"
+    ],
     "env": {
       "PORT": "3003",
       "TEST_PORT": "0"
@@ -42,7 +47,8 @@
     "start-dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "now-build": "echo 'Built on Travis CI'"
   },
   "proxy": "http://localhost:3003",
   "devDependencies": {
