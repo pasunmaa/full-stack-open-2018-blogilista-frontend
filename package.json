@@ -1,7 +1,28 @@
 {
-  "name": "bloglist",
-  "version": "0.1.0",
-  "private": true,
+  "name": "blogilista-ui",
+  "version": "1.0.1",
+  "description": "Helsinki Open University excercise Blogilista Frontend",
+  "browser": "build/index.html",
+  "homepage": "https://ui-blogilista-dev.now.sh",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pasunmaa/full-stack-open-2018-blogilista-frontend"
+  },
+  "keywords": [
+    "blogilista",
+    "frontend",
+    "ui"
+  ],
+  "author": "Petri Asunmaa",
+  "license": "ISC",
+  "now": {
+    "alias": "ui-blogilista-dev",
+    "env": {
+      "PORT": "3003",
+      "TEST_PORT": "0",
+      "NODE_ENV": "development"
+    }
+  },
   "dependencies": {
     "@material-ui/core": "^1.5.1",
     "@material-ui/icons": "^1.1.1",
@@ -14,9 +35,11 @@
     "react-scripts": "^1.1.4",
     "redux": "^4.0.0",
     "redux-devtools-extension": "^2.13.5",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "serve": "^10.0.0"
   },
   "scripts": {
+    "now-start": "cross-env NODE_ENV=production serve -s build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
@@ -25,6 +48,7 @@
   "proxy": "http://localhost:3003",
   "devDependencies": {
     "babel-eslint": "^8.2.6",
+    "cross-env": "^5.2.0",
     "enzyme": "^3.4.4",
     "enzyme-adapter-react-16": "^1.2.0",
     "eslint": "^4.19.1",
