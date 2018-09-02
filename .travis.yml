@@ -13,21 +13,21 @@ branches:
     - static
 jobs:
   include:
-    - stage: Run tests
-      name: "Run front-end unit tests"
-      script: npm test
+    #- stage: Run tests
+    #  name: "Run front-end unit tests"
+    #  script: npm test
     - stage: Build
       name: "Build front-end"
-      #install: 
-      #- npm install
-      script: npm run build
+      script: echo "npm run build run here" #npm run build
     - stage: Deploy to now
       name: "Deploy UI-server to Zeit now"
+      #install: 
+      #- npm install serve -g
       script: skip
       before_deploy: npm install now serve --no-save # Install Now CLI on Travis
       deploy:
         - provider: script # Run a custom deployment script which we will define below
-          script: now --public --token $NOW_TOKEN && now alias --token $NOW_TOKEN
+          script: echo "now deployment should run here" #now --public --token $NOW_TOKEN && now alias --token $NOW_TOKEN
           skip_cleanup: true
           on:
             all_branches: true

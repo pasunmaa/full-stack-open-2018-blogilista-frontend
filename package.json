@@ -17,6 +17,11 @@
   "license": "ISC",
   "now": {
     "alias": "ui-blogilista-dev",
+    "env": {
+      "PORT": "3003",
+      "TEST_PORT": "0",
+      "NODE_ENV": "development"
+    },
     "files": [
       "build",
       "rules.json",
@@ -39,7 +44,7 @@
     "serve": "^10.0.0"
   },
   "scripts": {
-    "now-start": "serve -s build",
+    "now-start": "cross-env NODE_ENV=production serve -s build",
     "start": "react-scripts start",
     "now-build": "echo 'Built on Travis CI'",
     "build": "react-scripts build",
@@ -49,6 +54,7 @@
   "proxy": "http://localhost:3003",
   "devDependencies": {
     "babel-eslint": "^8.2.6",
+    "cross-env": "^5.2.0",
     "enzyme": "^3.4.4",
     "enzyme-adapter-react-16": "^1.2.0",
     "eslint": "^4.19.1",
