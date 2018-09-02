@@ -18,7 +18,8 @@ jobs:
     #  script: npm test
     - stage: Build
       name: "Build front-end"
-      script: echo "npm run build run here" #npm run build
+      script: npm run build
+      #script: echo "npm run build run here"
     - stage: Deploy to now
       name: "Deploy UI-server to Zeit now"
       #install: 
@@ -27,7 +28,8 @@ jobs:
       before_deploy: npm install now serve --no-save # Install Now CLI on Travis
       deploy:
         - provider: script # Run a custom deployment script which we will define below
-          script: echo "now deployment should run here" #now --public --token $NOW_TOKEN && now alias --token $NOW_TOKEN
+          script: now --public --token $NOW_TOKEN && now alias --token $NOW_TOKEN
+          #script: echo "now deployment should run here"
           skip_cleanup: true
           on:
             all_branches: true
